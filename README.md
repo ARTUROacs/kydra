@@ -1,5 +1,7 @@
 <div align="center">
 
+<img src="https://github.com/eoansiedade/kydra/blob/main/art/icon_nobg.png?raw=true" width="144"/>
+
 # Kydra
 ### A hybrid game launcher for managing Steam games and third-party games.
 
