@@ -23,7 +23,7 @@
 - Documentation [here]()
 ---
 ## License
-Kydra is licensed under the [MIT License](LICENSE).
+- Kydra is licensed under the [MIT License](LICENSE).
 ---
 
 <div align="center">
