@@ -10,6 +10,8 @@
 
 </div>
 
+![KYdra V1 Home Page](./art/screenshots/home-v1.png).
+
 ---
 ## About
 - Kydra is a lightweight and modern game launcher that unifies Steam games and manually installed games into a single library.
