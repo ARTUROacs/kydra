@@ -10,7 +10,11 @@ if (!fs.existsSync(preferences.prefsPath)) {
     preferences.loadPreferences()
 }
 function createWindow() {
+<<<<<<< HEAD
     const win = new BrowserWindow({
+=======
+    const window = new BrowserWindow({
+>>>>>>> 538accf (patch v2026.5.19b)
         width: 1280,
         height: 720,
         minWidth: 900,
@@ -29,6 +33,7 @@ function createWindow() {
         }
     })
 
+<<<<<<< HEAD
     win.loadFile(path.join(__dirname, 'src/renderer/index.html'))
 
     win.setBackgroundColor('#0d0d0d')
@@ -39,6 +44,18 @@ function createWindow() {
     })
 
     win.setMenu(null)
+=======
+    window.loadFile(path.join(__dirname, 'src/renderer/index.html'))
+
+    window.setBackgroundColor('#0d0d0d')
+    window.center()
+
+    window.once('ready-to-show', () => {
+        window.show()
+    })
+
+    window.setMenu(null)
+>>>>>>> 538accf (patch v2026.5.19b)
 
 }
 
