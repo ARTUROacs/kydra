@@ -1,8 +1,4 @@
 node_modules/
-<<<<<<< HEAD
-*.env
-=======
 *.env
 .vscode/
 dist/
->>>>>>> 538accf (patch v2026.5.19b)
