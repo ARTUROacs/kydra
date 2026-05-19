@@ -24,7 +24,7 @@
 - Deals / discounted games section
 ---
 ## Build from source
-- Documentation [here]()
+- Documentation [here](./docs/BUILDING.MD)
 ---
 ## License
 - Kydra is licensed under the [MIT License](LICENSE).
