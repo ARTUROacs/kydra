@@ -3,7 +3,7 @@
 <img src="https://github.com/eoansiedade/kydra/blob/main/art/icon_nobg.png?raw=true" width="160"/>
 
 # Kydra
-### A hybrid game launcher for managing games from Steam, Itch.io, and third-party games..
+### A hybrid game launcher for managing games from Steam, Itch.io, and third-party games.
 
 ![Node](https://img.shields.io/badge/Node.js-18+-green)
 ![Electron](https://img.shields.io/badge/Electron-Framework-blue)
