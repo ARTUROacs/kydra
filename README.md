@@ -14,8 +14,8 @@
 
 ---
 ## Features
+- Itch.io integration via scrapping
 - Steam game integration via public API
-- Itch.io integration via API
 - Add and manage local (third-party) games
 - Launch games directly from the launcher
 - Game details (header, logo, screenshots)
