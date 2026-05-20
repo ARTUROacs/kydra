@@ -41,17 +41,6 @@ function createWindow() {
 
     window.setMenu(null)
 
-    window.loadFile(path.join(__dirname, 'src/renderer/index.html'))
-
-    window.setBackgroundColor('#0d0d0d')
-    window.center()
-
-    window.once('ready-to-show', () => {
-        window.show()
-    })
-
-    window.setMenu(null)
-
 }
 
 app.whenReady().then(() => {
