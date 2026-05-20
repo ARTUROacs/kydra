@@ -30,16 +30,16 @@ function createWindow() {
         }
     })
 
-    win.loadFile(path.join(__dirname, 'src/renderer/index.html'))
+    window.loadFile(path.join(__dirname, 'src/renderer/index.html'))
 
-    win.setBackgroundColor('#0d0d0d')
-    win.center()
+    window.setBackgroundColor('#0d0d0d')
+    window.center()
 
-    win.once('ready-to-show', () => {
-        win.show()
+    window.once('ready-to-show', () => {
+        window.show()
     })
 
-    win.setMenu(null)
+    window.setMenu(null)
 
     window.loadFile(path.join(__dirname, 'src/renderer/index.html'))
 
