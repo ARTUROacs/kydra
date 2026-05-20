@@ -17,6 +17,73 @@ function setBackground(url) {
     test.src = url
 }
 
+const sidebarButtons = document.querySelectorAll('.sidebar-btn')
+
+const pages = {
+    home: document.querySelector('.page-home'),
+    library: document.querySelector('.page-library'),
+    settings: document.querySelector('.page-settings')
+}
+
+sidebarButtons.forEach((btn, index) => {
+
+    btn.addEventListener('click', () => {
+
+        sidebarButtons.forEach(b => b.classList.remove('active'))
+
+        btn.classList.add('active')
+
+        Object.values(pages).forEach(p =>
+            p.classList.add('hidden')
+        )
+
+        if (index === 0) pages.home.classList.remove('hidden')
+        if (index === 1) pages.library.classList.remove('hidden')
+        if (index === 2) pages.settings.classList.remove('hidden')
+
+    })
+
+})
+
+function setHero(game, image) {
+    const heroBanner = document.querySelector('.hero-banner')
+    const heroTitle = document.querySelector('.hero-title')
+    const heroDescription = document.querySelector('.hero-description')
+    const primaryBtn = document.querySelector('.hero-btn.primary')
+    const secondaryBtn = document.querySelector('.hero-btn.secondary')
+
+    if (!heroBanner || !heroTitle) return
+
+    heroBanner.src = image || FALLBACK
+
+    heroBanner.onerror = () => {
+        heroBanner.src = FALLBACK
+    }
+
+    heroTitle.textContent = game.name
+
+    heroDescription.textContent =
+        game.source === 'steam'
+            ? `Enjoy ${game.discount} off on Steam!`
+            : `Featured indie game on itch.io with a promotion available now.`
+
+    primaryBtn.onclick = () => {
+        if (game.source === 'steam') {
+            window.kydraAPI.openStorePage?.(game.appid)
+        } else {
+            window.open(game.url, '_blank')
+        }
+    }
+
+    secondaryBtn.onclick = () => {
+        if (game.source === 'steam') {
+            window.open(`https://store.steampowered.com/app/${game.appid}`, '_blank')
+        } else {
+            window.open(game.url, '_blank')
+        }
+    }
+}
+
 async function loadSteamDeals() {
     try {
         const steamDeals = await window.kydraAPI.getSteamDeals?.() || []
@@ -96,6 +163,13 @@ async function loadDeals() {
         })
     )
 
+    if (deals[0]) {
+        const heroImg = assets[0]?.header || deals[0].image || FALLBACK
+
+        setHero(deals[0], heroImg)
+        setBackground(heroImg)
+    }
+
     deals.forEach((game, i) => {
         const img = assets[i]?.header || game.image || FALLBACK
 
@@ -142,11 +216,6 @@ async function loadDeals() {
 
         container.appendChild(card)
     })
-
-    if (deals[0]) {
-        const firstImg = assets[0]?.header || deals[0].image || FALLBACK
-        setBackground(firstImg)
-    }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
