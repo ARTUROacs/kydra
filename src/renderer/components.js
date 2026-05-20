@@ -15,9 +15,32 @@ function setBackground(url) {
     test.src = url
 }
 
+function normalizeItch(game) {
+    return {
+        name: game.title,
+        price: 0,
+        discount: 0,
+        image: game.image || FALLBACK,
+        appid: null,
+        link: game.link,
+        source: "itch"
+    }
+}
+
 async function loadDeals() {
 
-    const deals = await window.kydraAPI.getDeals?.() || []
+    const [steamDeals, itchDealsRaw] = await Promise.all([
+        window.kydraAPI.getSteamDeals?.() || [],
+        window.kydraAPI.getItchDeals?.() || []
+    ])
+
+    const itchDeals = (itchDealsRaw || []).map(normalizeItch)
+
+    const deals = [
+        ...steamDeals.map(g => ({ ...g, source: "steam" })),
+        ...itchDeals
+    ]
+
     const container = document.getElementById('deals')
 
     container.innerHTML = ''
@@ -25,12 +48,19 @@ async function loadDeals() {
     const sliced = deals.slice(0, 10)
 
     const assets = await Promise.all(
-        sliced.map(g => window.kydraAPI.getAssets(g.appid))
+        sliced.map(g =>
+            g.source === "steam"
+                ? window.kydraAPI.getAssets(g.appid)
+                : null
+        )
     )
 
     sliced.forEach((game, i) => {
 
-        const img = assets[i]?.header || game.image || FALLBACK
+        const img =
+            assets[i]?.header ||
+            game.image ||
+            FALLBACK
 
         const card = document.createElement('div')
         card.className = 'card'
@@ -43,10 +73,28 @@ async function loadDeals() {
 
             <div class="card-content">
                 <div>${game.name}</div>
-                <div>R$ ${(game.price / 100).toFixed(2)}</div>
-                <small>${game.discount}% OFF</small>
+
+                <div>
+                    ${
+                        game.source === "steam"
+                            ? `R$ ${(game.price / 100).toFixed(2)}`
+                            : `itch.io`
+                    }
+                </div>
+
+                <small>${game.discount || 0}% OFF</small>
+
+                <div class="card-source">
+                    ${game.source === "steam" ? "Steam" : "itch.io"}
+                </div>
             </div>
         `
+
+        if (game.source === "steam") {
+            card.addEventListener('click', () => {
+                window.kydraAPI.openStorePage(game.appid)
+            })
+        }
 
         card.addEventListener('mouseenter', () => {
             setBackground(img)
@@ -56,7 +104,11 @@ async function loadDeals() {
     })
 
     if (sliced[0]) {
-        const firstImg = assets[0]?.header || sliced[0].image || FALLBACK
+        const firstImg =
+            assets[0]?.header ||
+            sliced[0].image ||
+            FALLBACK
+
         setBackground(firstImg)
     }
 }

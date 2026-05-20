@@ -47,6 +47,7 @@ app.whenReady().then(() => {
     require('./src/ipc/steam.ipc')
     require('./src/ipc/preferences.ipc')
     require('./src/ipc/thirdparty.ipc')
+    require('./src/ipc/itchio.ipc')
 
     createWindow()
 

@@ -18,7 +18,7 @@ async function getGameDetails(appid) {
     }
 }
 
-async function getDeals() {
+async function getSteamDeals() {
     try {
 
         const res = await fetch('https://store.steampowered.com/api/featuredcategories?cc=br&l=portuguese&currency=7')
@@ -129,7 +129,7 @@ function openStorePage(appid) {
 
 module.exports = {
     getGameDetails,
-    getDeals,
+    getSteamDeals,
     getSteamInstalledGames,
     validateGameFiles,
     installGame,

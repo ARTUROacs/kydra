@@ -20,8 +20,8 @@ contextBridge.exposeInMainWorld('kydraAPI', {
     getAssets: (appid) =>
         ipcRenderer.invoke('steam:getAssets', appid),
 
-    getDeals: () =>
-        ipcRenderer.invoke('steam:getDeals'),
+    getSteamDeals: () =>
+        ipcRenderer.invoke('steam:getSteamDeals'),
 
     openStorePage: (appid) =>
         ipcRenderer.invoke('steam:openStorePage', appid),
@@ -31,6 +31,9 @@ contextBridge.exposeInMainWorld('kydraAPI', {
 
     searchSteamGame: (query) =>
         ipcRenderer.invoke('thirdparty:searchSteamGame', query),
+
+    getItchDeals: () =>
+        ipcRenderer.invoke('itchio:getItchDeals'),
 
     selectGame: (gamePath, appid) =>
         ipcRenderer.invoke('thirdparty:selectGame', gamePath, appid),

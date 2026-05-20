@@ -26,8 +26,8 @@ ipcMain.handle('steam:getAssets', (_, appid) => {
     return steam.getSteamAssets(appid)
 })
 
-ipcMain.handle('steam:getDeals', async () => {
-    return await steam.getDeals()
+ipcMain.handle('steam:getSteamDeals', async () => {
+    return await steam.getSteamDeals()
 })
 
 ipcMain.handle('steam:openStorePage', async (_, appid) => {
