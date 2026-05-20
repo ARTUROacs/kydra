@@ -25,21 +25,47 @@ const pages = {
     settings: document.querySelector('.page-settings')
 }
 
+function showPage(pageToShow) {
+
+    Object.values(pages).forEach(page => {
+
+        if (page === pageToShow) {
+
+            page.classList.remove('hidden')
+
+            requestAnimationFrame(() => {
+                page.style.opacity = '1'
+                page.style.transform = 'translateY(0px)'
+            })
+
+        } else {
+
+            page.style.opacity = '0'
+            page.style.transform = 'translateY(10px)'
+
+            setTimeout(() => {
+                page.classList.add('hidden')
+            }, 250)
+
+        }
+
+    })
+
+}
+
 sidebarButtons.forEach((btn, index) => {
 
     btn.addEventListener('click', () => {
 
-        sidebarButtons.forEach(b => b.classList.remove('active'))
+        sidebarButtons.forEach(b =>
+            b.classList.remove('active')
+        )
 
         btn.classList.add('active')
 
-        Object.values(pages).forEach(p =>
-            p.classList.add('hidden')
-        )
-
-        if (index === 0) pages.home.classList.remove('hidden')
-        if (index === 1) pages.library.classList.remove('hidden')
-        if (index === 2) pages.settings.classList.remove('hidden')
+        if (index === 0) showPage(pages.home)
+        if (index === 1) showPage(pages.library)
+        if (index === 2) showPage(pages.settings)
 
     })
 
