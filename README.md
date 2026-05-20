@@ -3,7 +3,7 @@
 <img src="https://github.com/eoansiedade/kydra/blob/main/art/icon_nobg.png?raw=true" width="160"/>
 
 # Kydra
-### A hybrid game launcher for managing games from Steam, Itch.io, and third-party games.
+### A modern indie game hub focused on Itch.io, Steam, and third-party games..
 
 ![Node](https://img.shields.io/badge/Node.js-18+-green)
 ![Electron](https://img.shields.io/badge/Electron-Framework-blue)
@@ -12,9 +12,6 @@
 
 ![KYdra V1 Home Page](./art/screenshots/home.png)
 
----
-## About
-- Kydra is a lightweight and modern game launcher that unifies games from Steam, Itch.io, and manually installed games into a single library.
 ---
 ## Features
 - Steam game integration via public API
