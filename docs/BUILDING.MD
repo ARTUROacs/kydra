@@ -17,6 +17,14 @@ npm install
 
 ### Step 2.
 
+- Now, compile.
+
+```bash
+npm run dist
+```
+
+### Outro.
+
 - Then, to test in a development environment, run:
 
 ```bash

@@ -91,6 +91,44 @@ async function fetchDeals() {
     return games
 }
 
+async function fetchNewGames(version) {
+    const { data } = await axios.get(
+        'https://itch.io/games/last-day',
+        {
+            headers: {
+                'User-Agent': `KydraLauncher/${version}`
+            }
+        }
+    )
+
+    const $ = cheerio.load(data)
+
+    const games = []
+
+    $('.game_cell').each((i, el) => {
+
+        const title = $(el).find('.game_title a').text().trim()
+        const url = $(el).find('.game_title a').attr('href')
+        const image = $(el).find('.game_thumb img').attr('src')
+        const author = $(el).find('.game_author a').text().trim()
+        const genre = $(el).find('.game_genre').text().trim()
+        const description = $(el).find('.game_text').text().trim()
+
+        games.push({
+            title,
+            url,
+            image,
+            author,
+            genre,
+            description
+        })
+    })
+
+    return games
+}
+
+
 module.exports = {
-    fetchDeals
+    fetchDeals,
+    fetchNewGames
 }

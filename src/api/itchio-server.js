@@ -23,7 +23,28 @@ app.get('/itchio/deals', async (req, res) => {
         })
 
     }
+})
 
+app.get('/itchio/new-games', async (req, res) => {
+
+    try {
+
+        const games = await scraper.fetchNewGames()
+
+        res.json({
+            success: true,
+            total: games.length,
+            games
+        })
+
+    } catch (err) {
+
+        res.status(500).json({
+            success: false,
+            error: err.message
+        })
+
+    }
 })
 
 app.listen(3000, () => {
