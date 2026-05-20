@@ -1,7 +1,18 @@
 const bg = document.querySelector('.bg')
 
+const FALLBACK = '../../art/header.png'
+const FALLBACKBG = '../../art/bg.png'
+
 function setBackground(url) {
     bg.style.backgroundImage = `url(${url})`
+
+    const test = new Image()
+
+    test.onerror = () => {
+        bg.style.backgroundImage = `url(${FALLBACK})`
+    }
+
+    test.src = url
 }
 
 async function loadDeals() {
@@ -19,13 +30,17 @@ async function loadDeals() {
 
     sliced.forEach((game, i) => {
 
-        const img = assets[i]?.header || game.image
+        const img = assets[i]?.header || game.image || FALLBACK
 
         const card = document.createElement('div')
         card.className = 'card'
 
         card.innerHTML = `
-            <img src="${img}">
+            <img 
+                src="${img}"
+                onerror="this.onerror=null;this.src='${FALLBACK}'"
+            >
+
             <div class="card-content">
                 <div>${game.name}</div>
                 <div>R$ ${(game.price / 100).toFixed(2)}</div>
@@ -41,16 +56,9 @@ async function loadDeals() {
     })
 
     if (sliced[0]) {
-        const firstImg = assets[0]?.header || sliced[0].image
+        const firstImg = assets[0]?.header || sliced[0].image || FALLBACK
         setBackground(firstImg)
     }
 }
 
-function showVersion() {
-  window.kydraAPI.getVersion?.().then(version => {
-    document.querySelector('.footer-text').innerText = version
-  })  
-}
-
-showVersion()
 loadDeals()

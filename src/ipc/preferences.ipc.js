@@ -16,7 +16,3 @@ ipcMain.handle('preferences:get', async (_, key) => {
 ipcMain.handle('preferences:set', async (_, key, value) => {
     return await preferences.setPreference(key, value)
 })
-
-ipcMain.handle('preferences:getVersion', async () => {
-    return await preferences.getVersion()
-})

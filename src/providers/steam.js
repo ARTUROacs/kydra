@@ -55,13 +55,20 @@ async function getSteamInstalledGames(path) {
 function getSteamAssets(appid) {
     const base = `https://cdn.cloudflare.steamstatic.com/steam/apps/${appid}`
 
+    const fallback = {
+        header: '../../art/header.jpg'
+    }
+
+    const header = `${base}/header.jpg`
+
     return {
-        header: `${base}/header.jpg`,
+        header,
         hero: `${base}/library_hero.jpg`,
         cover: `${base}/library_600x900.jpg`,
         logo: `${base}/logo.png`,
         capsule: `${base}/capsule_616x353.jpg`,
-        icon: `${base}/library_hero_blur.jpg`
+        icon: `${base}/library_hero_blur.jpg`,
+        fallback
     }
 }
 
