@@ -4,18 +4,19 @@ const os = require('os');
 
 const DEFAULT_PREFERENCES = {
   theme: 'dark',
-  steamGameDir: 'C:\\Program Files (x86)\\Steam\\steamapps\\common',
+  itchDeals: true,
+  steamDeals: true,
+  steamGameDir: '',
   language: 'en-US',
-  loggedIn: [],
   notifications: true,
 };
 
 const prefsPath = path.resolve(os.homedir(), '.kydra-preferences.json');
 
 function getVersion() {
-  const versionPath = path.join(__dirname, '..', '..', 'version.txt');
+  const versionPath = fetch('https://raw.githubusercontent.com/k7sistemas/kydra/refs/heads/main/version.txt');
   
-  return fs.readFileSync(versionPath, 'utf8').trim();
+  return versionPath
 }
 
 console.log(getVersion());

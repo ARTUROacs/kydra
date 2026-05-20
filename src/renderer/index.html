@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
+    <meta charset="UTF-8" />
 
-  <title>Kydra</title>
+    <title>Kydra</title>
 
-  <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/global.css">
 
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
-  >
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    >
 </head>
 
 <body>
@@ -20,121 +20,164 @@
 
 <div class="app">
 
-  <aside class="sidebar">
+    <aside class="sidebar">
 
-    <audio id="click-sfx" src="../../art/sfx/miau.wav" preload="auto"></audio>
-
-    <img src="../../art/icon_nobg.png" class="logo">
-
-    <div class="sidebar-buttons">
-
-      <button class="sidebar-btn active">
-        <i class="fa-solid fa-house"></i>
-        <span>Home</span>
-      </button>
-
-      <button class="sidebar-btn">
-        <i class="fa-solid fa-gamepad"></i>
-        <span>Library</span>
-      </button>
-
-      <button class="sidebar-btn">
-        <i class="fa-solid fa-gear"></i>
-        <span>Settings</span>
-      </button>
-
-    </div>
-
-  </aside>
-
-  <main class="main">
-
-    <section class="page page-home">
-
-      <section class="hero">
-
-        <div class="hero-overlay"></div>
+        <audio
+            id="click-sfx"
+            src="../../art/sfx/miau.wav"
+            preload="auto"
+        ></audio>
 
         <img
-          class="hero-banner"
-          src="../../art/header.png"
+            src="../../art/icon_nobg.png"
+            class="logo"
         >
 
-        <div class="hero-content">
+        <div class="sidebar-buttons">
 
-          <span class="hero-tag">FEATURED</span>
-
-          <h1 class="hero-title"></h1>
-
-          <p class="hero-description"></p>
-
-          <div class="hero-buttons">
-
-            <button class="hero-btn primary">
-              Play now
+            <button class="sidebar-btn active">
+                <i class="fa-solid fa-house"></i>
+                <span>Home</span>
             </button>
 
-            <button class="hero-btn secondary">
-              View on store
+            <button class="sidebar-btn">
+                <i class="fa-solid fa-gamepad"></i>
+                <span>Library</span>
             </button>
 
-          </div>
+            <button class="sidebar-btn">
+                <i class="fa-solid fa-gear"></i>
+                <span>Settings</span>
+            </button>
 
         </div>
 
-      </section>
+    </aside>
 
-      <div class="container">
+    <main class="main">
 
-        <div class="section-title">
-          Deals
-        </div>
+        <section class="page page-home">
 
-        <div class="grid" id="deals"></div>
+            <section class="hero">
 
-      </div>
+                <div class="hero-overlay"></div>
 
-    </section>
+                <img
+                    class="hero-banner"
+                    src="../../art/header.png"
+                >
 
-    <section class="page page-library hidden">
+                <div class="hero-content">
 
-      <div class="placeholder-page">
+                    <span class="hero-tag">
+                        FEATURED
+                    </span>
 
-        <i class="fa-solid fa-gamepad"></i>
+                    <h1 class="hero-title">
+                        Loading...
+                    </h1>
 
-        <h1>Your Library</h1>
+                    <p class="hero-description">
+                        Fetching indie deals...
+                    </p>
 
-        <p>
-          Your installed games will appear here.
-        </p>
+                    <div class="hero-buttons">
 
-      </div>
+                        <button class="hero-btn primary">
+                            Play now
+                        </button>
 
-    </section>
+                        <button class="hero-btn secondary">
+                            View on store
+                        </button>
 
-    <section class="page page-settings hidden">
+                    </div>
 
-      <div class="placeholder-page">
+                </div>
 
-        <i class="fa-solid fa-gear"></i>
+            </section>
 
-        <h1>Settings</h1>
+            <div class="container">
 
-        <p>
-          Customize your Kydra experience.
-        </p>
+                <div class="section-header">
 
-      </div>
+                    <h2 class="section-title">
+                        Deals
+                    </h2>
 
-    </section>
+                </div>
 
-  </main>
+                <div
+                    class="grid"
+                    id="deals"
+                ></div>
+
+            </div>
+
+            <div class="container latest-container">
+
+                <div class="section-header">
+
+                    <h2 class="section-title">
+                        Latest
+                    </h2>
+
+                </div>
+
+                <div
+                    class="grid"
+                    id="latest"
+                ></div>
+
+            </div>
+
+        </section>
+
+        <section class="page page-library hidden">
+
+            <div class="placeholder-page">
+
+                <i class="fa-solid fa-gamepad"></i>
+
+                <h1>
+                    Your Library
+                </h1>
+
+                <p>
+                    Your installed games will appear here.
+                </p>
+
+            </div>
+
+        </section>
+
+        <section class="page page-settings hidden">
+
+            <div class="placeholder-page">
+
+                <i class="fa-solid fa-gear"></i>
+
+                <h1>
+                    Settings
+                </h1>
+
+                <p>
+                    Customize your Kydra experience.
+                </p>
+
+            </div>
+
+        </section>
+
+    </main>
 
 </div>
 
-<div class="footer-text">2026.5.20b</div>
+<div class="footer-text">
+    2026.5.20b
+</div>
 
-<script src="components.js"></script>
+<script src="index.js"></script>
 
 </body>
 </html>
