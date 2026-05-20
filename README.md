@@ -14,7 +14,7 @@
 
 ---
 ## About
-- Kydra is a lightweight and modern game launcher that unifies Steam games and manually installed games into a single library.
+- Kydra is a lightweight and modern game launcher that unifies games from Steam, Itch.io, and manually installed games into a single library.
 ---
 ## Features
 - Steam game integration via public API
