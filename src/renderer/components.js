@@ -4,113 +4,151 @@ const FALLBACK = '../../art/header.png'
 const FALLBACKBG = '../../art/bg.png'
 
 function setBackground(url) {
+    if (!bg) return
+
     bg.style.backgroundImage = `url(${url})`
 
     const test = new Image()
 
     test.onerror = () => {
-        bg.style.backgroundImage = `url(${FALLBACK})`
+        bg.style.backgroundImage = `url(${FALLBACKBG})`
     }
 
     test.src = url
 }
 
-function normalizeItch(game) {
-    return {
-        name: game.title,
-        price: 0,
-        discount: 0,
-        image: game.image || FALLBACK,
-        appid: null,
-        link: game.link,
-        source: "itch"
+async function loadSteamDeals() {
+    try {
+        const steamDeals = await window.kydraAPI.getSteamDeals?.() || []
+
+        return steamDeals.map(g => ({
+            ...g,
+            source: 'steam',
+            discount: typeof g.discount_percent === 'number'
+                ? `${g.discount_percent}%`
+                : g.discount || '0%',
+            platforms: g.platforms || []
+        }))
+    } catch (err) {
+        console.error(err)
+        return []
     }
 }
 
+function normalizeItch(game) {
+    return {
+        name: game.title,
+        price: game.price || 'FREE',
+        discount: (game.discount || '0%').replace(/^-/, ''),
+        image: game.image || FALLBACK,
+        appid: null,
+        url: game.url,
+        source: 'itch',
+        platforms: game.platforms || []
+    }
+}
+
+async function loadItchDeals() {
+    try {
+        const res = await window.kydraAPI.getItchDeals?.()
+        const games = res?.games || []
+        return games.map(normalizeItch)
+    } catch (err) {
+        console.error(err)
+        return []
+    }
+}
+
+function mergeDeals(steamDeals, itchDeals, limit = 10) {
+    const merged = []
+    const maxIndex = Math.max(steamDeals.length, itchDeals.length)
+
+    for (let i = 0; i < maxIndex && merged.length < limit; i += 1) {
+        if (i < steamDeals.length) merged.push(steamDeals[i])
+        if (merged.length >= limit) break
+        if (i < itchDeals.length) merged.push(itchDeals[i])
+    }
+
+    return merged
+}
+
 async function loadDeals() {
-
-    const [steamDeals, itchDealsRaw] = await Promise.all([
-        window.kydraAPI.getSteamDeals?.() || [],
-        window.kydraAPI.getItchDeals?.() || []
-    ])
-
-    const itchDeals = (itchDealsRaw || []).map(normalizeItch)
-
-    const deals = [
-        ...steamDeals.map(g => ({ ...g, source: "steam" })),
-        ...itchDeals
-    ]
-
     const container = document.getElementById('deals')
+    if (!container) return
 
     container.innerHTML = ''
 
-    const sliced = deals.slice(0, 10)
+    const [steamDeals, itchDeals] = await Promise.all([
+        loadSteamDeals(),
+        loadItchDeals()
+    ])
+
+    const deals = mergeDeals(steamDeals, itchDeals, 20)
 
     const assets = await Promise.all(
-        sliced.map(g =>
-            g.source === "steam"
-                ? window.kydraAPI.getAssets(g.appid)
-                : null
-        )
+        deals.map(async g => {
+            try {
+                if (g.source !== 'steam') return null
+                return await window.kydraAPI.getAssets(g.appid)
+            } catch (e) {
+                return null
+            }
+        })
     )
 
-    sliced.forEach((game, i) => {
-
-        const img =
-            assets[i]?.header ||
-            game.image ||
-            FALLBACK
+    deals.forEach((game, i) => {
+        const img = assets[i]?.header || game.image || FALLBACK
 
         const card = document.createElement('div')
         card.className = 'card'
 
         card.innerHTML = `
-            <img 
-                src="${img}"
-                onerror="this.onerror=null;this.src='${FALLBACK}'"
-            >
+            <img src="${img}" onerror="this.src='${FALLBACK}'">
 
             <div class="card-content">
-                <div>${game.name}</div>
+                <div class="card-title">${game.name}</div>
 
-                <div>
-                    ${
-                        game.source === "steam"
-                            ? `R$ ${(game.price / 100).toFixed(2)}`
-                            : `itch.io`
-                    }
+                <div class="card-price">
+                    ${game.source === 'steam'
+                        ? `R$ ${(game.price / 100).toFixed(2)}`
+                        : game.price}
                 </div>
 
-                <small>${game.discount || 0}% OFF</small>
+                <small class="card-discount">${game.discount} OFF</small>
+
+                <div class="card-platforms">
+                    ${(game.platforms || []).map(p =>
+                        `<span class="platform-badge">${p}</span>`
+                    ).join('')}
+                </div>
 
                 <div class="card-source">
-                    ${game.source === "steam" ? "Steam" : "itch.io"}
+                    ${game.source === 'steam' ? 'Steam' : 'itch.io'}
                 </div>
             </div>
         `
-
-        if (game.source === "steam") {
-            card.addEventListener('click', () => {
-                window.kydraAPI.openStorePage(game.appid)
-            })
-        }
 
         card.addEventListener('mouseenter', () => {
             setBackground(img)
         })
 
+        card.addEventListener('click', () => {
+            if (game.source === 'steam') {
+                window.kydraAPI.openStorePage?.(game.appid)
+            } else {
+                window.open(game.url, '_blank')
+            }
+        })
+
         container.appendChild(card)
     })
 
-    if (sliced[0]) {
-        const firstImg =
-            assets[0]?.header ||
-            sliced[0].image ||
-            FALLBACK
-
+    if (deals[0]) {
+        const firstImg = assets[0]?.header || deals[0].image || FALLBACK
         setBackground(firstImg)
     }
 }
 
-loadDeals()
+document.addEventListener('DOMContentLoaded', () => {
+    loadDeals()
+})

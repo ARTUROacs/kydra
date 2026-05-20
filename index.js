@@ -32,6 +32,8 @@ function createWindow() {
 
     window.loadFile(path.join(__dirname, 'src/renderer/index.html'))
 
+    window.webContents.openDevTools()
+
     window.setBackgroundColor('#0d0d0d')
     window.center()
 
@@ -48,6 +50,7 @@ app.whenReady().then(() => {
     require('./src/ipc/preferences.ipc')
     require('./src/ipc/thirdparty.ipc')
     require('./src/ipc/itchio.ipc')
+    require('./src/api/itchio-server')
 
     createWindow()
 
