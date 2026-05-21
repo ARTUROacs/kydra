@@ -2,7 +2,7 @@ const { app, BrowserWindow } = require('electron')
 const path = require('path')
 const fs = require('fs')
 
-const preferences = require('./src/services/preferences')
+const preferences = require('./src/services/app')
 
 if (!fs.existsSync(preferences.prefsPath)) {
     preferences.savePreferences(preferences.DEFAULT_PREFERENCES)
@@ -32,7 +32,7 @@ function createWindow() {
 
     window.loadFile(path.join(__dirname, 'src/renderer/index.html'))
 
-    window.webContents.openDevTools()
+    // window.webContents.openDevTools()
 
     window.setBackgroundColor('#0d0d0d')
     window.center()
@@ -47,7 +47,7 @@ function createWindow() {
 
 app.whenReady().then(() => {
     require('./src/ipc/steam.ipc')
-    require('./src/ipc/preferences.ipc')
+    require('./src/ipc/app.ipc')
     require('./src/ipc/thirdparty.ipc')
     require('./src/ipc/itchio.ipc')
     require('./src/api/itchio-server')

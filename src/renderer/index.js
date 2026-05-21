@@ -3,6 +3,8 @@ const bg = document.querySelector('.bg')
 const FALLBACK = '../../art/header.png'
 const FALLBACKBG = '../../art/bg.png'
 
+let selectedGame = null
+
 function setBackground(url) {
 
     if (!bg) return
@@ -19,10 +21,40 @@ function setBackground(url) {
 
 }
 
-const sidebarButtons = document.querySelectorAll('.sidebar-btn')
+function stripHTML(text) {
+    return text?.replace(/<[^>]*>/g, '').trim() || ''
+}
+
+async function getVersion() {
+
+    const footer = document.querySelector('.footer-text')
+
+    if (!footer) return
+
+    try {
+
+        const version =
+            await window.kydraAPI.getVersion?.()
+            || 'Unknown Version'
+
+        footer.textContent = version
+
+    } catch {
+
+        footer.textContent = 'Unknown Version'
+
+    }
+
+}
+
+getVersion()
+
+const sidebarButtons =
+    document.querySelectorAll('.sidebar-btn')
 
 const pages = {
     home: document.querySelector('.page-home'),
+    game: document.querySelector('.page-game'),
     library: document.querySelector('.page-library'),
     settings: document.querySelector('.page-settings')
 }
@@ -67,9 +99,14 @@ sidebarButtons.forEach((btn, index) => {
 
         btn.classList.add('active')
 
-        if (index === 0) showPage(pages.home)
-        if (index === 1) showPage(pages.library)
-        if (index === 2) showPage(pages.settings)
+        if (index === 0)
+            showPage(pages.home)
+
+        if (index === 1)
+            showPage(pages.library)
+
+        if (index === 2)
+            showPage(pages.settings)
 
     })
 
@@ -77,9 +114,14 @@ sidebarButtons.forEach((btn, index) => {
 
 function setHero(game, image) {
 
-    const heroBanner = document.querySelector('.hero-banner')
-    const heroTitle = document.querySelector('.hero-title')
-    const heroDescription = document.querySelector('.hero-description')
+    const heroBanner =
+        document.querySelector('.hero-banner')
+
+    const heroTitle =
+        document.querySelector('.hero-title')
+
+    const heroDescription =
+        document.querySelector('.hero-description')
 
     const primaryBtn =
         document.querySelector('.hero-btn.primary')
@@ -87,7 +129,8 @@ function setHero(game, image) {
     const secondaryBtn =
         document.querySelector('.hero-btn.secondary')
 
-    if (!heroBanner || !heroTitle) return
+    if (!heroBanner || !heroTitle)
+        return
 
     heroBanner.src = image || FALLBACK
 
@@ -106,7 +149,8 @@ function setHero(game, image) {
 
         if (game.source === 'steam') {
 
-            window.kydraAPI.openStorePage?.(game.appid)
+            window.kydraAPI
+                .openStorePage?.(game.appid)
 
         } else {
 
@@ -135,12 +179,207 @@ function setHero(game, image) {
 
 }
 
+async function setGamePage(game, image) {
+
+    selectedGame = game
+
+    const title =
+        document.querySelector('.game-title')
+
+    const tag =
+        document.querySelector('.game-tag')
+
+    const description =
+        document.querySelector('.game-description')
+
+    const hero =
+        document.querySelector('.game-hero-bg')
+
+    const logo =
+        document.querySelector('.game-logo')
+
+    const genre =
+        document.querySelector('.game-genre')
+
+    const platforms =
+        document.querySelector('.game-platforms')
+
+    const price =
+        document.querySelector('.game-price')
+
+    const release =
+        document.querySelector('.game-release')
+
+    const aboutText =
+        document.querySelector('.game-info-card p')
+
+    const screenshotsGrid =
+        document.querySelector('.screenshots-grid')
+
+    const buyBtn =
+        document.querySelector('.game-buy-btn')
+
+    const heroImage =
+        image || game.image || FALLBACK
+
+    const logoImage =
+        game.logo || image || FALLBACK
+
+    const selectedData = {
+        ...game,
+        screenshotSources: [heroImage, logoImage]
+    }
+
+    if (game.source === 'steam' && game.appid) {
+        try {
+            const details =
+                await window.kydraAPI
+                    .getGameDetails?.(game.appid)
+
+            if (details) {
+                selectedData.description =
+                    selectedData.description
+                    || stripHTML(details.short_description)
+                    || stripHTML(details.detailed_description)
+
+                selectedData.genre =
+                    selectedData.genre
+                    || details.genres?.map(g => g.description).join(' / ')
+
+                selectedData.platforms =
+                    selectedData.platforms?.length
+                        ? selectedData.platforms
+                        : Object.entries(details.platforms || {})
+                            .filter(([, available]) => available)
+                            .map(([name]) =>
+                                name.charAt(0).toUpperCase() +
+                                name.slice(1)
+                            )
+
+                selectedData.release =
+                    selectedData.release
+                    || details.release_date?.date
+
+                selectedData.screenshotSources =
+                    details.screenshots?.map(s =>
+                        s.path_full || s.path_thumbnail
+                    ).filter(Boolean)
+
+                if (!selectedData.logo && details.header_image) {
+                    selectedData.logo = details.header_image
+                }
+            }
+        } catch (error) {
+            console.error('Failed to load Steam game details:', error)
+        }
+    }
+
+    if (title)
+        title.textContent = selectedData.name
+
+    if (tag)
+        tag.textContent =
+            game.source === 'steam'
+                ? 'Steam Deal'
+                : 'itch.io Game'
+
+    if (description)
+        description.textContent =
+            selectedData.description
+            || 'No description available.'
+
+    if (hero)
+        hero.src = heroImage
+
+    if (logo)
+        logo.src = logoImage
+
+    if (genre)
+        genre.textContent =
+            selectedData.genre || 'Indie'
+
+    if (platforms)
+        platforms.textContent =
+            selectedData.platforms?.join(' / ')
+            || 'Windows'
+
+    if (release)
+        release.textContent =
+            selectedData.release || 'Unknown'
+
+    if (price) {
+
+        price.textContent =
+            game.source === 'steam'
+                ? `R$ ${((game.price || 0) / 100).toFixed(2)}`
+                : game.price
+
+    }
+
+    if (aboutText)
+        aboutText.textContent =
+            selectedData.description
+            || 'This game does not have a description available yet.'
+
+    if (screenshotsGrid) {
+        screenshotsGrid.innerHTML = ''
+
+        const screenshots =
+            selectedData.screenshotSources
+                .slice(0, 3)
+                .filter(Boolean)
+
+        const screenshotItems =
+            screenshots.length > 0
+                ? screenshots
+                : [heroImage, logoImage, FALLBACK]
+
+        screenshotItems.forEach(src => {
+            const img = document.createElement('img')
+            img.src = src
+            img.onerror = () => {
+                img.src = FALLBACK
+            }
+            screenshotsGrid.appendChild(img)
+        })
+    }
+
+    if (buyBtn) {
+        buyBtn.textContent =
+            game.source === 'steam'
+                ? 'View on Store'
+                : 'Open on itch.io'
+
+        buyBtn.onclick = () => {
+
+            if (game.source === 'steam') {
+
+                window.kydraAPI
+                    .openStorePage?.(game.appid)
+
+            } else {
+
+                window.open(game.url, '_blank')
+
+            }
+
+        }
+
+    }
+
+    setBackground(heroImage)
+
+    showPage(pages.game)
+
+}
+
 async function loadSteamDeals() {
 
     try {
 
         const steamDeals =
-            await window.kydraAPI.getSteamDeals?.() || []
+            await window.kydraAPI
+                .getSteamDeals?.() || []
 
         return steamDeals.map(g => ({
 
@@ -157,9 +396,7 @@ async function loadSteamDeals() {
 
         }))
 
-    } catch (err) {
-
-        console.error(err)
+    } catch {
 
         return []
 
@@ -171,23 +408,43 @@ function normalizeItch(game) {
 
     return {
 
-        name: game.title,
+        name:
+            game.title
+            || game.name,
 
-        price: game.price || 'FREE',
+        price:
+            game.price
+            || 'FREE',
 
         discount:
             (game.discount || '0%')
                 .replace(/^-/, ''),
 
-        image: game.image || FALLBACK,
+        image:
+            game.image
+            || FALLBACK,
 
         appid: null,
 
-        url: game.url,
+        url:
+            game.url,
 
         source: 'itch',
 
-        platforms: game.platforms || []
+        platforms:
+            game.platforms || [],
+
+        description:
+            game.description
+            || 'Amazing indie game available now.',
+
+        genre:
+            game.genre
+            || 'Indie',
+
+        release:
+            game.release
+            || '2026'
 
     }
 
@@ -198,15 +455,15 @@ async function loadItchDeals() {
     try {
 
         const res =
-            await window.kydraAPI.getItchDeals?.()
+            await window.kydraAPI
+                .getItchDeals?.()
 
-        const games = res?.games || []
+        const games =
+            res?.games || []
 
         return games.map(normalizeItch)
 
-    } catch (err) {
-
-        console.error(err)
+    } catch {
 
         return []
 
@@ -219,15 +476,15 @@ async function loadLatestGames() {
     try {
 
         const res =
-            await window.kydraAPI.getLatestGames?.()
+            await window.kydraAPI
+                .getLatestGames?.()
 
-        const games = res?.games || []
+        const games =
+            res?.games || []
 
         return games.map(normalizeItch)
 
-    } catch (err) {
-
-        console.error(err)
+    } catch {
 
         return []
 
@@ -235,7 +492,11 @@ async function loadLatestGames() {
 
 }
 
-function mergeDeals(itchDeals, steamDeals, limit = 20) {
+function mergeDeals(
+    itchDeals,
+    steamDeals,
+    limit = 20
+) {
 
     const merged = []
 
@@ -247,8 +508,9 @@ function mergeDeals(itchDeals, steamDeals, limit = 20) {
 
     for (
         let i = 0;
-        i < maxIndex && merged.length < limit;
-        i += 1
+        i < maxIndex
+        && merged.length < limit;
+        i++
     ) {
 
         if (i < itchDeals.length)
@@ -266,9 +528,14 @@ function mergeDeals(itchDeals, steamDeals, limit = 20) {
 
 }
 
-async function createCard(container, game, img) {
+async function createCard(
+    container,
+    game,
+    img
+) {
 
-    const card = document.createElement('div')
+    const card =
+        document.createElement('div')
 
     card.className = 'card'
 
@@ -289,7 +556,7 @@ async function createCard(container, game, img) {
 
                 ${
                     game.source === 'steam'
-                        ? `R$ ${(game.price / 100).toFixed(2)}`
+                        ? `R$ ${((game.price || 0) / 100).toFixed(2)}`
                         : game.price
                 }
 
@@ -325,24 +592,19 @@ async function createCard(container, game, img) {
 
     `
 
-    card.addEventListener('mouseenter', () => {
-        setBackground(img)
-    })
-
-    card.addEventListener('click', () => {
-
-        if (game.source === 'steam') {
-
-            window.kydraAPI
-                .openStorePage?.(game.appid)
-
-        } else {
-
-            window.open(game.url, '_blank')
-
+    card.addEventListener(
+        'mouseenter',
+        () => {
+            setBackground(img)
         }
+    )
 
-    })
+    card.addEventListener(
+        'click',
+        () => {
+            setGamePage(game, img)
+        }
+    )
 
     container.appendChild(card)
 
@@ -356,8 +618,10 @@ async function loadDeals() {
     const latestContainer =
         document.getElementById('latest')
 
-    if (!dealsContainer || !latestContainer)
-        return
+    if (
+        !dealsContainer
+        || !latestContainer
+    ) return
 
     dealsContainer.innerHTML = ''
     latestContainer.innerHTML = ''
@@ -381,27 +645,29 @@ async function loadDeals() {
             24
         )
 
-    const assets = await Promise.all(
+    const assets =
+        await Promise.all(
 
-        deals.map(async g => {
+            deals.map(async g => {
 
-            try {
+                try {
 
-                if (g.source !== 'steam')
+                    if (g.source !== 'steam')
+                        return null
+
+                    return await window
+                        .kydraAPI
+                        .getAssets(g.appid)
+
+                } catch {
+
                     return null
 
-                return await window.kydraAPI
-                    .getAssets(g.appid)
+                }
 
-            } catch {
+            })
 
-                return null
-
-            }
-
-        })
-
-    )
+        )
 
     if (deals[0]) {
 
@@ -410,7 +676,10 @@ async function loadDeals() {
             || deals[0].image
             || FALLBACK
 
-        setHero(deals[0], heroImg)
+        setHero(
+            deals[0],
+            heroImg
+        )
 
         setBackground(heroImg)
 
@@ -418,7 +687,10 @@ async function loadDeals() {
 
     await Promise.all(
 
-        deals.map(async (game, i) => {
+        deals.map(async (
+            game,
+            i
+        ) => {
 
             const img =
                 assets[i]?.header

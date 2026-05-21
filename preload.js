@@ -55,4 +55,7 @@ contextBridge.exposeInMainWorld('kydraAPI', {
 
     setPreference: (key, value) =>
         ipcRenderer.invoke('preferences:set', key, value),
+
+    getVersion: () =>
+        ipcRenderer.invoke('app:getVersion')
 })

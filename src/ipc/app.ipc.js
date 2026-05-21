@@ -1,5 +1,5 @@
 const { ipcMain } = require('electron')
-const preferences = require('../services/preferences')
+const preferences = require('../services/app')
 
 ipcMain.handle('preferences:save', async (_, prefs) => {
     return await preferences.savePreferences(prefs)
@@ -15,4 +15,8 @@ ipcMain.handle('preferences:get', async (_, key) => {
 
 ipcMain.handle('preferences:set', async (_, key, value) => {
     return await preferences.setPreference(key, value)
+})
+
+ipcMain.handle('app:getVersion', () => {
+    return preferences.getVersion()
 })

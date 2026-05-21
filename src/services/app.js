@@ -12,14 +12,16 @@ const DEFAULT_PREFERENCES = {
 };
 
 const prefsPath = path.resolve(os.homedir(), '.kydra-preferences.json');
+const versionPath = path.resolve(__dirname, '..', '..', 'version.txt');
 
 function getVersion() {
-  const versionPath = fetch('https://raw.githubusercontent.com/k7sistemas/kydra/refs/heads/main/version.txt');
-  
-  return versionPath
+  try {
+    return fs.readFileSync(versionPath, 'utf8').trim() || 'Unknown Version';
+  } catch (error) {
+    console.error('[app] failed to read version:', error);
+    return 'Unknown Version';
+  }
 }
-
-console.log(getVersion());
 
 function ensurePrefsFile() {
 
@@ -82,4 +84,5 @@ module.exports = {
   savePreferences,
   getPreference,
   setPreference,
+  getVersion,
 };
