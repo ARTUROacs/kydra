@@ -1,6 +1,6 @@
 async function getItchDeals() {
     try {
-        const response = await fetch('http://localhost:3000/itchio/deals')
+        const response = await fetch('http://localhost:3000/api/deals')
         const data = await response.json()
 
         if (!data || !data.success) {

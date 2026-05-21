@@ -3,7 +3,7 @@ const scraper = require('./itchio-scrapping')
 
 const app = express()
 
-app.get('/itchio/deals', async (req, res) => {
+app.get('/api/deals', async (req, res) => {
 
     try {
 
@@ -25,7 +25,7 @@ app.get('/itchio/deals', async (req, res) => {
     }
 })
 
-app.get('/itchio/new-games', async (req, res) => {
+app.get('/api/new-games', async (req, res) => {
 
     try {
 

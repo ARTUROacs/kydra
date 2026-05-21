@@ -416,32 +416,38 @@ async function loadDeals() {
 
     }
 
-    for (let i = 0; i < deals.length; i++) {
+    await Promise.all(
 
-        const game = deals[i]
+        deals.map(async (game, i) => {
 
-        const img =
-            assets[i]?.header
-            || game.image
-            || FALLBACK
+            const img =
+                assets[i]?.header
+                || game.image
+                || FALLBACK
 
-        await createCard(
-            dealsContainer,
-            game,
-            img
+            await createCard(
+                dealsContainer,
+                game,
+                img
+            )
+
+        })
+
+    )
+
+    await Promise.all(
+
+        latestGames.map(game =>
+
+            createCard(
+                latestContainer,
+                game,
+                game.image || FALLBACK
+            )
+
         )
 
-    }
-
-    latestGames.forEach(async game => {
-
-        await createCard(
-            latestContainer,
-            game,
-            game.image || FALLBACK
-        )
-
-    })
+    )
 
 }
 
