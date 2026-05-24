@@ -20,3 +20,7 @@ ipcMain.handle('preferences:set', async (_, key, value) => {
 ipcMain.handle('app:getVersion', () => {
     return preferences.getVersion()
 })
+
+ipcMain.handle('app:checkUpdates', async () => {
+    return await preferences.checkForUpdates()
+})

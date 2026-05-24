@@ -1,0 +1,35 @@
+{
+  "app": {
+    "checkUpdates": "Check for Updates",
+    "updateAvailable": "Update Available!",
+    "updateReady": "Version {version} is ready",
+    "updateNow": "Update Now"
+  },
+  "page": {
+    "settings": {
+      "title": "Settings",
+      "theme": "Theme",
+      "currency": "Currency",
+      "language": "Language",
+      "steamDeals": "Steam Deals",
+      "itchDeals": "Itch.io Games"
+    }
+  },
+  "game": {
+    "title": "Title",
+    "price": "Price",
+    "discount": "Discount",
+    "platforms": "Platforms",
+    "release": "Release Date",
+    "description": "Description",
+    "noDescription": "No description available",
+    "steamDeal": "Steam Deal",
+    "itchGame": "Itch.io Game"
+  },
+  "button": {
+    "open": "Open",
+    "close": "Close",
+    "save": "Save",
+    "cancel": "Cancel"
+  }
+}

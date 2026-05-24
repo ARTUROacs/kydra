@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8" />
 
     <title>Kydra</title>
@@ -11,6 +13,7 @@
         rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
     >
+
 </head>
 
 <body>
@@ -36,18 +39,33 @@
         <div class="sidebar-buttons">
 
             <button class="sidebar-btn active">
+
                 <i class="fa-solid fa-house"></i>
-                <span>Home</span>
+
+                <span>
+                    Home
+                </span>
+
             </button>
 
             <button class="sidebar-btn">
+
                 <i class="fa-solid fa-gamepad"></i>
-                <span>Library</span>
+
+                <span>
+                    Library
+                </span>
+
             </button>
 
             <button class="sidebar-btn">
+
                 <i class="fa-solid fa-gear"></i>
-                <span>Settings</span>
+
+                <span>
+                    Settings
+                </span>
+
             </button>
 
         </div>
@@ -297,17 +315,267 @@
 
         <section class="page page-settings hidden">
 
-            <div class="placeholder-page">
+            <div class="settings-page">
 
-                <i class="fa-solid fa-gear"></i>
+                <div class="settings-header">
 
-                <h1>
-                    Settings
-                </h1>
+                    <h1>
+                        Settings
+                    </h1>
 
-                <p>
-                    Customize your Kydra experience.
-                </p>
+                    <p>
+                        Customize your Kydra experience.
+                    </p>
+
+                </div>
+
+                <div class="settings-grid">
+
+                    <div class="settings-card">
+
+                        <h2>
+                            Appearance
+                        </h2>
+
+                        <div class="setting-item">
+
+                            <div>
+
+                                <span class="setting-title">
+                                    Theme
+                                </span>
+
+                                <span class="setting-description">
+                                    Choose launcher appearance
+                                </span>
+
+                            </div>
+
+                            <select id="theme-setting">
+
+                                <option value="dark">
+                                    Dark
+                                </option>
+
+                                <option value="light">
+                                    Light
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                        <div class="setting-item">
+
+                            <div>
+
+                                <span class="setting-title">
+                                    Language
+                                </span>
+
+                                <span class="setting-description">
+                                    Launcher language
+                                </span>
+
+                            </div>
+
+                            <select id="language-setting">
+
+                                <option value="en-US">
+                                    English
+                                </option>
+
+                                <option value="pt-BR">
+                                    Português
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                        <div class="setting-item">
+
+                            <div>
+
+                                <span class="setting-title">
+                                    Currency
+                                </span>
+
+                                <span class="setting-description">
+                                    Preferred currency
+                                </span>
+
+                            </div>
+
+                            <select id="currency-setting">
+
+                                <option value="USD">
+                                    USD
+                                </option>
+
+                                <option value="BRL">
+                                    BRL
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+                    <div class="settings-card">
+
+                        <h2>
+                            Integrations
+                        </h2>
+
+                        <div class="setting-item">
+
+                            <div>
+
+                                <span class="setting-title">
+                                    Itch.io Deals
+                                </span>
+
+                                <span class="setting-description">
+                                    Show deals from Itch.io
+                                </span>
+
+                            </div>
+
+                            <label class="switch">
+
+                                <input
+                                    type="checkbox"
+                                    id="itch-setting"
+                                >
+
+                                <span class="slider"></span>
+
+                            </label>
+
+                        </div>
+
+                        <div class="setting-item">
+
+                            <div>
+
+                                <span class="setting-title">
+                                    Steam Deals
+                                </span>
+
+                                <span class="setting-description">
+                                    Show Steam promotions
+                                </span>
+
+                            </div>
+
+                            <label class="switch">
+
+                                <input
+                                    type="checkbox"
+                                    id="steam-setting"
+                                >
+
+                                <span class="slider"></span>
+
+                            </label>
+
+                        </div>
+
+                        <div class="setting-item">
+
+                            <div>
+
+                                <span class="setting-title">
+                                    Notifications
+                                </span>
+
+                                <span class="setting-description">
+                                    Enable launcher notifications
+                                </span>
+
+                            </div>
+
+                            <label class="switch">
+
+                                <input
+                                    type="checkbox"
+                                    id="notifications-setting"
+                                >
+
+                                <span class="slider"></span>
+
+                            </label>
+
+                        </div>
+
+                    </div>
+
+                    <div class="settings-card">
+
+                        <h2>
+                            Steam
+                        </h2>
+
+                        <div class="setting-column">
+
+                            <span class="setting-title">
+                                Steam Game Directory
+                            </span>
+
+                            <span class="setting-description">
+                                Select where your Steam games are installed
+                            </span>
+
+                            <div class="path-input-group">
+
+                                <input
+                                    type="text"
+                                    id="steam-dir-setting"
+                                    placeholder="/home/user/.steam/steamapps/common"
+                                >
+
+                                <button id="browse-steam-dir">
+                                    Browse
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="settings-card">
+
+                        <h2>
+                            About
+                        </h2>
+
+                        <div class="about-box">
+
+                            <img
+                                src="../../art/icon_nobg.png"
+                                class="about-logo"
+                            >
+
+                            <div>
+
+                                <h3>
+                                    Kydra
+                                </h3>
+
+                                <p id="app-version">
+                                    Loading version...
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
 
             </div>
 
@@ -322,4 +590,5 @@
 <script src="index.js"></script>
 
 </body>
+
 </html>

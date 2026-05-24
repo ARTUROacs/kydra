@@ -1,5 +1,7 @@
 const { exec } = require('child_process')
 
+const preferences = require('../services/app').loadPreferences()
+
 async function getGameDetails(appid) {
     try {
         const response = await fetch(`https://store.steampowered.com/api/appdetails?appids=${appid}`)
@@ -20,7 +22,14 @@ async function getGameDetails(appid) {
 async function getSteamDeals() {
     try {
 
-        const res = await fetch('https://store.steampowered.com/api/featuredcategories?cc=br&l=portuguese&currency=7')
+        if (!preferences.steamDeals) {
+            return []
+        }
+
+        if (!preferences.currency) {
+            console.warn('Currency not set in preferences, defaulting to USD')
+        }
+        const res = await fetch(`https://store.steampowered.com/api/featuredcategories?cc=br&l=portuguese&currency=${preferences.currency === 'BRL' ? 7 : 1}`)
 
         if (!res.ok) {
             throw new Error(`HTTP ${res.status}`)

@@ -57,5 +57,23 @@ contextBridge.exposeInMainWorld('kydraAPI', {
         ipcRenderer.invoke('preferences:set', key, value),
 
     getVersion: () =>
-        ipcRenderer.invoke('app:getVersion')
+        ipcRenderer.invoke('app:getVersion'),
+
+    checkUpdates: () =>
+        ipcRenderer.invoke('app:checkUpdates'),
+
+    getLanguages: () =>
+        ipcRenderer.invoke('translation:getLanguages'),
+
+    getDefaultLanguage: () =>
+        ipcRenderer.invoke('translation:getDefaultLanguage'),
+
+    getTranslation: (key, language, variables) =>
+        ipcRenderer.invoke('translation:getTranslation', key, language, variables),
+
+    getAllTranslations: (language) =>
+        ipcRenderer.invoke('translation:getAllTranslations', language),
+
+    translate: (key, language) =>
+        ipcRenderer.invoke('translation:translate', key, language)
 })
