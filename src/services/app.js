@@ -6,7 +6,7 @@ const https = require('https');
 const DEFAULT_PREFERENCES = {
   theme: 'dark',
   itchDeals: true,
-  steamDeals: true,
+  steamDeals: false,
   steamGameDir: '',
   language: 'en-US',
   currency: 'USD',
