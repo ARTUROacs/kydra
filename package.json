@@ -1,6 +1,6 @@
 {
   "name": "kydra",
-  "version": "2026.5.21b",
+  "version": "2026.5.24b",
   "description": "Kydra Launcher",
   "main": "index.js",
   "type": "commonjs",
@@ -16,7 +16,6 @@
   "dependencies": {
     "axios": "^1.16.1",
     "cheerio": "^1.2.0",
-    "dotenv": "^17.4.2",
     "express": "^5.2.1",
     "node-fetch": "^3.3.2",
     "openid": "^2.0.15"

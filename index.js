@@ -9,6 +9,7 @@ if (!fs.existsSync(preferences.prefsPath)) {
 } else {
     preferences.loadPreferences()
 }
+
 function createWindow() {
     const window = new BrowserWindow({
 

@@ -10,11 +10,11 @@
 
 </div>
 
-![KYdra V1 Home Page](./art/screenshots/home.png)
+![KYdra Home Page](./art/screenshots/home.png)
 
 ---
 ## Features
-- Itch.io integration via scrapping
+- Itch.io integration via local API
 - Steam game integration via public API
 - Add and manage local (third-party) games
 - Launch games directly from the launcher
@@ -23,6 +23,13 @@
 ---
 ## Build from source
 - Documentation [here](./docs/BUILDING.MD)
+---
+## Contributors
+
+<a href="https://github.com/k7sistemas/kydra/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=k7sistemas/kydra" />
+</a>
+
 ---
 ## License
 - Kydra is licensed under the [MIT License](LICENSE).

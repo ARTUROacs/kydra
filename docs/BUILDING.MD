@@ -1,34 +1,37 @@
-# Build from source
-### In this module, you will learn how to compile Kydra source code.
+# Build from Source
 
-## Steps
+In this module, you will learn how to compile and run Kydra from source code.
 
-### Requirements
+## Requirements
 
-- Node.js +18
+- Node.js 18+
+- Windows  
+  > If you use Linux, run the commands manually in your terminal.
 
-### Step 1.
+## Step 1 — Install Dependencies
 
-- First, install the dependencies with:
+Run the installer script:
 
-```bash
-npm install
+```bat
+install.bat
 ```
 
-### Step 2.
+This will automatically install all required dependencies and compile.
 
-- Now, compile.
+---
 
-```bash
-npm run dist
+## Step 2 — Start Kydra
+
+Run the start script:
+
+```bat
+start.bat
 ```
 
-### Outro.
+This will launch Kydra in a development environment.
 
-- Then, to test in a development environment, run:
-
-```bash
-npm start
-```
+---
 
 ## Done!
+
+Kydra should now be running successfully.
