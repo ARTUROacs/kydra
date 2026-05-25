@@ -10,7 +10,7 @@
 
 </div>
 
-![KYdra Home Page](./art/screenshots/home.png)
+![Kydra Home Page](./art/screenshots/home.png)
 
 ---
 ## Features
