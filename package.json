@@ -1,6 +1,6 @@
 {
   "name": "kydra",
-  "version": "2026.5.24b",
+  "version": "2026.5.25b",
   "description": "Kydra Launcher",
   "main": "index.js",
   "type": "commonjs",

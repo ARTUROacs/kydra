@@ -3,33 +3,32 @@
     "checkUpdates": "Check for Updates",
     "updateAvailable": "Update Available!",
     "updateReady": "Version {version} is ready",
-    "updateNow": "Update Now"
+    "updateNow": "Update Now",
+    "loading": "Loading...",
+    "fetchingDeals": "Fetching indie deals..."
   },
-  "page": {
-    "settings": {
-      "title": "Settings",
-      "theme": "Theme",
-      "currency": "Currency",
-      "language": "Language",
-      "steamDeals": "Steam Deals",
-      "itchDeals": "Itch.io Games"
-    }
+  "navigation": {
+    "home": "Home",
+    "library": "Library",
+    "settings": "Settings"
+  },
+  "hero": {
+    "featured": "FEATURED",
+    "playNow": "Play now",
+    "viewStore": "View on store",
+    "featuredSponsored": "Featured sponsored game."
+  },
+  "section": {
+    "deals": "Deals",
+    "latest": "Latest"
   },
   "game": {
-    "title": "Title",
-    "price": "Price",
-    "discount": "Discount",
-    "platforms": "Platforms",
-    "release": "Release Date",
-    "description": "Description",
-    "noDescription": "No description available",
-    "steamDeal": "Steam Deal",
-    "itchGame": "Itch.io Game"
+    "aboutThis": "About this game",
+    "genre": "Genre",
+    "screenshots": "Screenshots"
   },
   "button": {
-    "open": "Open",
-    "close": "Close",
-    "save": "Save",
-    "cancel": "Cancel"
+    "buyNow": "Buy Now",
+    "wishlist": "Add to Wishlist"
   }
 }

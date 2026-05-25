@@ -51,7 +51,9 @@ app.whenReady().then(() => {
     require('./src/ipc/app.ipc')
     require('./src/ipc/thirdparty.ipc')
     require('./src/ipc/itchio.ipc')
-    require('./src/api/itchio-server')
+    require('./src/ipc/get.ipc')
+    require('./src/ipc/translations.ipc')
+    require('./src/api/itchio/itchio-server')
 
     createWindow()
 

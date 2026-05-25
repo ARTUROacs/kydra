@@ -7,7 +7,20 @@ let preferences = { theme: 'dark', currency: 'USD', steamDeals: true, itchDeals:
 let USD_TO_BRL = 5.01
 let currentVersion = null
 let currentLanguage = 'pt'
-let translations = {}
+let translations = {
+  pt: {
+    app: { checkUpdates: 'Verificar Atualizações', updateAvailable: 'Atualização Disponível!', updateReady: 'Versão {version} está pronta', updateNow: 'Atualizar Agora', loading: 'Carregando...', fetchingDeals: 'Buscando ofertas...' },
+    navigation: { home: 'Início', library: 'Biblioteca', settings: 'Configurações' },
+    hero: { featured: 'DESTAQUE', playNow: 'Jogar Agora', viewStore: 'Ver na Loja', featuredSponsored: 'Jogo em destaque patrocinado.' },
+    section: { deals: 'Ofertas', latest: 'Recentes' }
+  },
+  en: {
+    app: { checkUpdates: 'Check for Updates', updateAvailable: 'Update Available!', updateReady: 'Version {version} is ready', updateNow: 'Update Now', loading: 'Loading...', fetchingDeals: 'Fetching indie deals...' },
+    navigation: { home: 'Home', library: 'Library', settings: 'Settings' },
+    hero: { featured: 'FEATURED', playNow: 'Play now', viewStore: 'View on store', featuredSponsored: 'Featured sponsored game.' },
+    section: { deals: 'Deals', latest: 'Latest' }
+  }
+}
 
 async function fetchExchangeRate() {
   try {
@@ -21,23 +34,29 @@ async function fetchExchangeRate() {
 
 async function loadPreferences() {
   try {
-    if (window.kydraAPI?.preferences?.load) {
-      const prefs = await window.kydraAPI.preferences.load()
-      preferences = { ...preferences, ...(prefs || {}) }
+    if (window.kydraAPI?.loadPreferences) {
+      const prefs = await window.kydraAPI.loadPreferences()
+      if (prefs && typeof prefs === 'object') {
+        preferences = { ...preferences, ...prefs }
+        console.log('[preferences] Loaded:', preferences)
+      }
     }
   } catch (err) {
-    console.error('Failed to load preferences:', err)
+    console.error('[preferences] Failed to load:', err)
   }
 }
 
 async function setPreference(key, value) {
   try {
     preferences[key] = value
-    if (window.kydraAPI?.preferences?.set) {
-      await window.kydraAPI.preferences.set(key, value)
+    if (window.kydraAPI?.setPreference) {
+      const result = await window.kydraAPI.setPreference(key, value)
+      console.log(`[preferences] Set ${key}:`, value, 'Result:', result)
+      return result
     }
   } catch (err) {
-    console.error('Failed to save preference:', err)
+    console.error(`[preferences] Failed to set ${key}:`, err)
+    throw err
   }
 }
 
@@ -83,25 +102,63 @@ async function refreshUI() {
 
 async function loadTranslations(language = currentLanguage) {
   try {
+    const langCode = language === 'pt-BR' ? 'pt' : language === 'en-US' ? 'en' : language
     if (window.kydraAPI?.getAllTranslations) {
-      translations = await window.kydraAPI.getAllTranslations(language)
-      currentLanguage = language
+      const loaded = await window.kydraAPI.getAllTranslations(langCode)
+      if (loaded && typeof loaded === 'object') {
+        translations[langCode] = { ...translations[langCode], ...loaded }
+        console.log(`[translations] Loaded ${langCode}:`, Object.keys(loaded).length, 'keys')
+      }
     }
+    currentLanguage = langCode
   } catch (err) {
-    console.error('Failed to load translations:', err)
+    console.error(`[translations] Failed to load ${language}:`, err)
   }
 }
 
 function t(key, variables = {}) {
-  if (window.kydraAPI?.getTranslation) {
-    return window.kydraAPI.getTranslation(key, currentLanguage, variables)
+  const keys = key.split('.')
+  let value = translations[currentLanguage] || translations['pt']
+
+  for (const k of keys) {
+    if (value && typeof value === 'object' && k in value) {
+      value = value[k]
+    } else {
+      return key
+    }
   }
-  return key
+
+  if (!value || typeof value !== 'string') return key
+
+  if (Object.keys(variables).length > 0) {
+    return value.replace(/\{(\w+)\}/g, (match, varKey) => variables[varKey] || match)
+  }
+
+  return value
 }
 
 async function setLanguage(language) {
-  await loadTranslations(language)
-  await setPreference('language', language)
+  const langCode = language === 'pt-BR' ? 'pt' : language === 'en-US' ? 'en' : language
+  currentLanguage = langCode
+  await loadTranslations(langCode)
+  await setPreference('language', langCode)
+
+  const sidebarSpans = document.querySelectorAll('.sidebar-btn span')
+  const sectionTitles = document.querySelectorAll('.section-title')
+  const heroTag = document.querySelector('.hero-tag')
+  const heroBtns = document.querySelectorAll('.hero-btn')
+
+  if (sidebarSpans[0]) sidebarSpans[0].textContent = t('navigation.home')
+  if (sidebarSpans[1]) sidebarSpans[1].textContent = t('navigation.library')
+  if (sidebarSpans[2]) sidebarSpans[2].textContent = t('navigation.settings')
+
+  if (sectionTitles[0]) sectionTitles[0].textContent = t('section.deals')
+  if (sectionTitles[1]) sectionTitles[1].textContent = t('section.latest')
+
+  if (heroTag) heroTag.textContent = t('hero.featured')
+  if (heroBtns[0]) heroBtns[0].textContent = t('hero.playNow')
+  if (heroBtns[1]) heroBtns[1].textContent = t('hero.viewStore')
+
   await refreshUI()
 }
 
@@ -152,9 +209,9 @@ function showUpdateNotification(newVersion) {
   notif.className = 'update-notif'
 
   notif.innerHTML = `
-    <div class="notif-title">Atualização disponível!</div>
-    <div class="notif-text">Versão ${newVersion} está pronta</div>
-    <button onclick="location.reload()">Atualizar agora</button>
+    <div class="notif-title">Update Available!</div>
+    <div class="notif-text">Version ${newVersion} is ready</div>
+    <button onclick="location.reload()">Update Now</button>
   `
 
   document.body.appendChild(notif)
@@ -252,11 +309,16 @@ function setHero(game, image) {
   }
 
   heroTitle.textContent = game.name
-  heroDescription.textContent = game.source === 'steam'
-    ? `Enjoy ${game.discount} off on Steam!`
-    : `Featured indie game on itch.io with a promotion available now.`
 
-  primaryBtn.onclick = () => {
+  if (game.source === 'sponsored') {
+    heroDescription.textContent = game.description || t('hero.featuredSponsored')
+  } else if (game.source === 'steam') {
+    heroDescription.textContent = `Enjoy ${game.discount} off on Steam!`
+  } else {
+    heroDescription.textContent = 'Featured indie game on itch.io with a promotion available now.'
+  }
+
+  const openGame = () => {
     if (game.source === 'steam') {
       if (window.kydraAPI?.openStorePage) {
         window.kydraAPI.openStorePage(game.appid)
@@ -268,12 +330,21 @@ function setHero(game, image) {
     }
   }
 
-  secondaryBtn.onclick = () => {
-    if (game.source === 'steam') {
-      window.open(`https://store.steampowered.com/app/${game.appid}`, '_blank')
-    } else {
-      window.open(game.url, '_blank')
-    }
+  const addToWishlist = () => {
+    console.log('[hero] Added to wishlist:', game.name)
+    window.open(game.url, '_blank')
+  }
+
+  if (game.source === 'sponsored' && game.state === 'wishlist') {
+    primaryBtn.textContent = t('button.wishlist')
+    primaryBtn.onclick = addToWishlist
+    secondaryBtn.textContent = t('hero.viewStore')
+    secondaryBtn.onclick = openGame
+  } else {
+    primaryBtn.textContent = game.source === 'sponsored' ? t('hero.playNow') : t('hero.playNow')
+    primaryBtn.onclick = openGame
+    secondaryBtn.textContent = t('button.wishlist')
+    secondaryBtn.onclick = addToWishlist
   }
 }
 
@@ -383,7 +454,6 @@ async function loadSteamDeals() {
   try {
     if (!window.kydraAPI?.getSteamDeals) return []
     const steamDeals = await window.kydraAPI.getSteamDeals() || []
-
     return steamDeals.map(g => ({
       ...g,
       source: 'steam',
@@ -396,16 +466,11 @@ async function loadSteamDeals() {
 }
 
 function normalizeItch(game) {
-  const rawPrice = parseFloat(
-    String(game.price || '0').replace('$', '').replace(',', '.')
-  )
-
+  const rawPrice = parseFloat(String(game.price || '0').replace('$', '').replace(',', '.'))
   return {
     name: game.title || game.name,
     rawPrice,
-    price: rawPrice <= 0
-      ? 'FREE'
-      : formatPrice(rawPrice, preferences.currency),
+    price: rawPrice <= 0 ? 'FREE' : formatPrice(rawPrice, preferences.currency),
     discount: (game.discount || '0%').replace(/^-/, ''),
     image: game.image || FALLBACK,
     appid: null,
@@ -455,7 +520,7 @@ function mergeDeals(itchDeals, steamDeals, limit = 20) {
   return merged
 }
 
-async function createCard(container, game, img) {
+function createCard(container, game, img) {
   const card = document.createElement('div')
   card.className = 'card'
 
@@ -500,6 +565,26 @@ async function loadDeals() {
   dealsContainer.innerHTML = ''
   latestContainer.innerHTML = ''
 
+  const heroTitle = document.querySelector('.hero-title')
+  const heroDesc = document.querySelector('.hero-description')
+  if (heroTitle) heroTitle.textContent = t('app.loading')
+  if (heroDesc) heroDesc.textContent = t('app.fetchingDeals')
+
+  let sponsoredHero = null
+  let sponsoredImage = null
+
+  try {
+    console.log('[sponsored] Loading sponsored hero...')
+    sponsoredHero = await window.kydraAPI?.getSponsoredHero?.()
+    console.log('[sponsored] Response:', sponsoredHero)
+    if (sponsoredHero && sponsoredHero.name) {
+      sponsoredImage = sponsoredHero.headerImage || sponsoredHero.header || sponsoredHero.image || FALLBACK
+      console.log('[sponsored] Valid hero data, name:', sponsoredHero.name)
+    }
+  } catch (err) {
+    console.error('[sponsored] Failed to load sponsored hero:', err)
+  }
+
   const [steamDeals, itchDeals, latestGames] = await Promise.all([
     preferences.steamDeals ? loadSteamDeals() : [],
     preferences.itchDeals ? loadItchDeals() : [],
@@ -508,35 +593,52 @@ async function loadDeals() {
 
   const deals = mergeDeals(itchDeals, steamDeals, 24)
 
-  const assets = await Promise.all(
-    deals.map(async g => {
-      try {
-        if (g.source !== 'steam' || !window.kydraAPI?.getAssets) return null
-        return await window.kydraAPI.getAssets(g.appid)
-      } catch {
-        return null
-      }
-    })
-  )
+  let heroGame = null
+  let heroImage = FALLBACK
 
-  if (deals[0]) {
-    const heroImg = assets[0]?.header || deals[0].image || FALLBACK
-    setHero(deals[0], heroImg)
-    setBackground(heroImg)
+  if (sponsoredHero && sponsoredHero.name) {
+    heroGame = {
+      name: sponsoredHero.name || 'Sponsored Game',
+      description: sponsoredHero.description || '',
+      url: sponsoredHero.url || '',
+      appid: sponsoredHero.appid || '',
+      price: sponsoredHero.price || 'FREE',
+      discount: sponsoredHero.discount || '0%',
+      platforms: Array.isArray(sponsoredHero.platforms) ? sponsoredHero.platforms : [],
+      image: sponsoredImage,
+      source: 'sponsored',
+      state: sponsoredHero.state || 'open'
+    }
+    heroImage = sponsoredImage
+    console.log('[sponsored] Setting hero to sponsored game:', heroGame.name, 'State:', heroGame.state)
+  } else if (deals.length > 0) {
+    const assets = await Promise.all(
+      deals.map(async (game) => {
+        try {
+          if (game.source !== 'steam' || !window.kydraAPI?.getAssets) return null
+          return await window.kydraAPI.getAssets(game.appid)
+        } catch {
+          return null
+        }
+      })
+    )
+    heroGame = deals[0]
+    heroImage = assets[0]?.header || deals[0].image || FALLBACK
+    console.log('[deals] Setting hero to first deal:', heroGame.name)
   }
 
-  await Promise.all(
-    deals.map(async (game, i) => {
-      const img = assets[i]?.header || game.image || FALLBACK
-      await createCard(dealsContainer, game, img)
-    })
-  )
+  if (heroGame) {
+    setHero(heroGame, heroImage)
+    setBackground(heroImage)
+  }
 
-  await Promise.all(
-    latestGames.map(game =>
-      createCard(latestContainer, game, game.image || FALLBACK)
-    )
-  )
+  deals.forEach((game) => {
+    createCard(dealsContainer, game, game.image || FALLBACK)
+  })
+
+  latestGames.forEach((game) => {
+    createCard(latestContainer, game, game.image || FALLBACK)
+  })
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -544,9 +646,27 @@ document.addEventListener('DOMContentLoaded', async () => {
   initializePageElements()
   await fetchExchangeRate()
   await loadPreferences()
+  currentLanguage = preferences.language || 'pt'
+  await loadTranslations(currentLanguage)
   applyTheme()
   await getVersion()
   await checkForUpdates()
+
+  const sidebarSpans = document.querySelectorAll('.sidebar-btn span')
+  const sectionTitles = document.querySelectorAll('.section-title')
+  const heroTag = document.querySelector('.hero-tag')
+  const heroBtns = document.querySelectorAll('.hero-btn')
+
+  if (sidebarSpans[0]) sidebarSpans[0].textContent = t('navigation.home')
+  if (sidebarSpans[1]) sidebarSpans[1].textContent = t('navigation.library')
+  if (sidebarSpans[2]) sidebarSpans[2].textContent = t('navigation.settings')
+
+  if (sectionTitles[0]) sectionTitles[0].textContent = t('section.deals')
+  if (sectionTitles[1]) sectionTitles[1].textContent = t('section.latest')
+
+  if (heroTag) heroTag.textContent = t('hero.featured')
+  if (heroBtns[0]) heroBtns[0].textContent = t('hero.playNow')
+  if (heroBtns[1]) heroBtns[1].textContent = t('hero.viewStore')
 
   const currencySetting = document.getElementById('currency-setting')
   if (currencySetting) {
@@ -563,6 +683,15 @@ document.addEventListener('DOMContentLoaded', async () => {
     themeSetting.addEventListener('change', async e => {
       await setPreference('theme', e.target.value)
       await refreshUI()
+    })
+  }
+
+  const languageSetting = document.getElementById('language-setting')
+  if (languageSetting) {
+    languageSetting.value = preferences.language === 'pt' ? 'pt-BR' : 'en-US'
+    languageSetting.addEventListener('change', async e => {
+      const lang = e.target.value === 'pt-BR' ? 'pt' : 'en'
+      await setLanguage(lang)
     })
   }
 
