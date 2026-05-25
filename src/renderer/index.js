@@ -146,12 +146,22 @@ function compareVersions(v1, v2) {
 function showUpdateNotification(newVersion) {
   const existing = document.getElementById('update-notification')
   if (existing) existing.remove()
+
   const notif = document.createElement('div')
   notif.id = 'update-notification'
-  notif.style.cssText = 'position: fixed; top: 20px; right: 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 16px 24px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.3); z-index: 10000; font-weight: 500; max-width: 300px;'
-  notif.innerHTML = '<div style="font-size: 14px; margin-bottom: 8px;">Atualização disponível!</div><div style="font-size: 12px; opacity: 0.9; margin-bottom: 12px;">Versão ' + newVersion + ' está pronta</div><button onclick="location.reload()" style="background: rgba(255,255,255,0.2); border: none; color: white; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: 500;">Atualizar agora</button>'
+  notif.className = 'update-notif'
+
+  notif.innerHTML = `
+    <div class="notif-title">Atualização disponível!</div>
+    <div class="notif-text">Versão ${newVersion} está pronta</div>
+    <button onclick="location.reload()">Atualizar agora</button>
+  `
+
   document.body.appendChild(notif)
-  setTimeout(() => { if (notif.parentNode) notif.remove() }, 10000)
+
+  setTimeout(() => {
+    if (notif.parentNode) notif.remove()
+  }, 10000)
 }
 
 async function getVersion() {

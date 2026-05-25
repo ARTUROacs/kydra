@@ -20,7 +20,6 @@ function getVersion() {
   try {
     return fs.readFileSync(versionPath, 'utf8').trim() || 'Unknown Version';
   } catch (error) {
-    console.error('[app] failed to read version:', error);
     return 'Unknown Version';
   }
 }
