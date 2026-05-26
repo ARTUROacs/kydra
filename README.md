@@ -37,6 +37,6 @@
 
 <div align="center">
   
-© 2026 K7 Sistemas
+© 2026 210 Time
 
 </div>
