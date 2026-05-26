@@ -1,6 +1,8 @@
 const fs = require('fs')
 const path = require('path')
 
+const preferences = require('../services/app')
+
 async function searchSteamGame(query) {
 
     try {
@@ -241,8 +243,96 @@ function getGameImages(gamePath) {
     }
 }
 
+function getDirs(dir, result = []) {
+    const files = fs.readdirSync(dir)
+
+    files.forEach(file => {
+        const fullPath = path.join(dir, file)
+
+        if (fs.statSync(fullPath).isDirectory()) {
+            result.push(fullPath)
+            getDirs(fullPath, result)
+        }
+    })
+
+    return result
+}
+
+async function getInstalledGames() {
+    const steamDir = preferences.getPreference('steamGameDir')
+    const itchioDir = preferences.getPreference('itchioGameDir')
+    const thirdpartyDir = preferences.getPreference('thirdpartyGameDir')
+
+    const games = []
+
+    function loadGame(dir, source) {
+        const kydraPath = path.join(dir, '.kydra')
+        const metaPath = path.join(kydraPath, 'meta.json')
+
+        if (!fs.existsSync(kydraPath)) return
+        if (!fs.existsSync(metaPath)) return
+
+        const meta = JSON.parse(fs.readFileSync(metaPath, 'utf8'))
+
+        const artsPath = path.join(dir, 'arts')
+
+        const header = path.join(artsPath, meta.header || 'header.png')
+        const bg = path.join(artsPath, meta.bg || 'bg.png')
+        const logo = path.join(artsPath, meta.logo || 'logo.png')
+
+        meta.source = source
+
+        games.push({
+            type: source,
+
+            path: dir,
+
+            meta,
+
+            arts: {
+                header: fs.existsSync(header) ? header : null,
+                bg: fs.existsSync(bg) ? bg : null,
+                logo: fs.existsSync(logo) ? logo : null
+            }
+        })
+    }
+
+    if (steamDir) {
+        const dirs = getDirs(steamDir)
+
+        dirs.forEach(dir => {
+            loadGame(dir, 'steam')
+        })
+    } else {
+        console.warn('Steam game directory not set in preferences.')
+    }
+
+    if (itchioDir) {
+        const dirs = getDirs(itchioDir)
+
+        dirs.forEach(dir => {
+            loadGame(dir, 'itchio')
+        })
+    } else {
+        console.warn('Itchio game directory not set in preferences.')
+    }
+
+    if (thirdpartyDir) {
+        const dirs = getDirs(thirdpartyDir)
+
+        dirs.forEach(dir => {
+            loadGame(dir, 'thirdparty')
+        })
+    } else {
+        console.warn('Third-party game directory not set in preferences.')
+    }
+
+    return games
+}
+
 module.exports = {
     searchSteamGame,
     selectGame,
+    getInstalledGames,
     getGameImages
 }

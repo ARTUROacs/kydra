@@ -5,7 +5,9 @@
     "updateReady": "Versão {version} está pronta",
     "updateNow": "Atualizar Agora",
     "loading": "Carregando...",
-    "fetchingDeals": "Buscando ofertas..."
+    "fetchingDeals": "Buscando ofertas...",
+    "unknownVersion": "Versão Desconhecida",
+    "failedToCheckUpdates": "Falha ao verificar atualizações:"
   },
   "navigation": {
     "home": "Início",
@@ -25,10 +27,82 @@
   "game": {
     "aboutThis": "Sobre este jogo",
     "genre": "Gênero",
-    "screenshots": "Capturas de tela"
+    "screenshots": "Capturas de tela",
+    "steamDeal": "Promoção Steam",
+    "itchioGame": "Jogo itch.io",
+    "noDescription": "Nenhuma descrição disponível.",
+    "defaultGenre": "Indie",
+    "defaultPlatform": "Windows",
+    "defaultRelease": "Desconhecido",
+    "defaultDescription": "Este jogo não possui descrição disponível no momento.",
+    "steamDiscount": "Aproveite {discount} de desconto no Steam!"
   },
   "button": {
     "buyNow": "Comprar Agora",
-    "wishlist": "Adicionar à Lista de Desejos"
+    "wishlist": "Adicionar à Lista de Desejos",
+    "play": "Jogar",
+    "details": "Detalhes",
+    "browse": "Procurar"
+  },
+  "library": {
+    "title": "Sua Biblioteca",
+    "description": "Gerencie seus jogos instalados e favoritos.",
+    "search": "Procurar jogos...",
+    "all": "Todos",
+    "installed": "Instalados",
+    "favorites": "Favoritos",
+    "recent": "Recentes",
+    "status": {
+      "installed": "Instalado",
+      "playedYesterday": "Jogado ontem"
+    }
+  },
+  "settings": {
+    "title": "Configurações",
+    "description": "Personalize sua experiência no Kydra.",
+    "appearance": {
+      "title": "Aparência",
+      "theme": "Tema",
+      "themeDescription": "Escolha a aparência do iniciador",
+      "dark": "Escuro",
+      "light": "Claro"
+    },
+    "language": {
+      "title": "Idioma",
+      "description": "Idioma do iniciador",
+      "english": "English",
+      "portuguese": "Português"
+    },
+    "currency": {
+      "title": "Moeda",
+      "description": "Moeda preferida"
+    },
+    "integrations": {
+      "title": "Integrações",
+      "itchDeals": "Ofertas Itch.io",
+      "itchDescription": "Mostrar ofertas do Itch.io",
+      "steamDeals": "Promoções Steam",
+      "steamDescription": "Mostrar promoções do Steam",
+      "notifications": "Notificações",
+      "notificationsDescription": "Ativar notificações do iniciador"
+    },
+    "steam": {
+      "title": "Steam",
+      "directory": "Diretório de Jogos Steam",
+      "directoryDescription": "Selecione onde seus jogos Steam estão instalados"
+    },
+    "thirdParty": {
+      "title": "Terceiros",
+      "directory": "Diretório de Terceiros",
+      "directoryDescription": "Selecione onde seus jogos de terceiros estão instalados"
+    },
+    "about": {
+      "title": "Sobre",
+      "appName": "Kydra",
+      "loadingVersion": "Carregando versão..."
+    }
+  },
+  "steam": {
+    "loginSuccess": "Login realizado com sucesso! Você pode fechar esta aba."
   }
 }

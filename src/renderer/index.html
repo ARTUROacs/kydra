@@ -1,573 +1,284 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
+    <head>
 
-    <meta charset="UTF-8" />
+        <meta charset="UTF-8" />
 
-    <title>Kydra</title>
+        <title>Kydra</title>
 
-    <link rel="stylesheet" href="css/global.css">
+        <link rel="stylesheet" href="css/global.css">
 
-    <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
-    >
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
-</head>
+    </head>
 
-<body>
+    <body>
 
-<div class="bg"></div>
-<div class="bg-blur"></div>
+        <div class="bg"></div>
+        <div class="bg-blur"></div>
 
-<div class="app">
+        <div class="app">
 
-    <aside class="sidebar">
+            <aside class="sidebar">
 
-        <audio
-            id="click-sfx"
-            src="../../art/sfx/miau.wav"
-            preload="auto"
-        ></audio>
-
-        <img
-            src="../../art/icon_nobg.png"
-            class="logo"
-        >
-
-        <div class="sidebar-buttons">
-
-            <button class="sidebar-btn active">
-
-                <i class="fa-solid fa-house"></i>
-
-                <span>
-                    Home
-                </span>
-
-            </button>
-
-            <button class="sidebar-btn">
-
-                <i class="fa-solid fa-gamepad"></i>
-
-                <span>
-                    Library
-                </span>
-
-            </button>
-
-            <button class="sidebar-btn">
-
-                <i class="fa-solid fa-gear"></i>
-
-                <span>
-                    Settings
-                </span>
-
-            </button>
-
-        </div>
-
-    </aside>
-
-    <main class="main">
-
-        <section class="page page-home">
-
-            <section class="hero">
-
-                <div class="hero-overlay"></div>
+                <audio
+                    id="click-sfx"
+                    src="../../art/sfx/miau.wav"
+                    preload="auto"></audio>
 
                 <img
-                    class="hero-banner"
-                    src="../../art/header.png"
-                >
+                    src="../../art/icon_nobg.png"
+                    class="logo">
 
-                <div class="hero-content">
+                <div class="sidebar-buttons">
 
-                    <span class="hero-tag">
-                        FEATURED
-                    </span>
+                    <button class="sidebar-btn active">
 
-                    <h1 class="hero-title">
-                        Loading...
-                    </h1>
+                        <i class="fa-solid fa-house"></i>
 
-                    <p class="hero-description">
-                        Fetching indie deals...
-                    </p>
-
-                    <div class="hero-buttons">
-
-                        <button class="hero-btn primary">
-                            Play now
-                        </button>
-
-                        <button class="hero-btn secondary">
-                            View on store
-                        </button>
-
-                    </div>
-
-                </div>
-
-            </section>
-
-            <div class="container">
-
-                <div class="section-header">
-
-                    <h2 class="section-title">
-                        Deals
-                    </h2>
-
-                </div>
-
-                <div
-                    class="grid"
-                    id="deals"
-                ></div>
-
-            </div>
-
-            <div class="container latest-container">
-
-                <div class="section-header">
-
-                    <h2 class="section-title">
-                        Latest
-                    </h2>
-
-                </div>
-
-                <div
-                    class="grid"
-                    id="latest"
-                ></div>
-
-            </div>
-
-        </section>
-
-        <section class="page page-game hidden">
-
-            <div class="game-page">
-
-                <div class="game-hero">
-
-                    <img
-                        src="../../art/header.png"
-                        class="game-hero-bg"
-                    >
-
-                    <div class="game-hero-overlay"></div>
-
-                    <div class="game-hero-content">
-
-                        <img
-                            src="../../art/icon_nobg.png"
-                            class="game-logo"
-                        >
-
-                        <span class="game-tag">
-                            FEATURED
+                        <span>
+                            Home
                         </span>
 
-                        <h1 class="game-title">
-                            Hollow Knight
-                        </h1>
+                    </button>
 
-                        <p class="game-description">
+                    <button class="sidebar-btn">
 
-                            Forge your own path in Hollow Knight!
-                            An epic action adventure through a vast
-                            ruined kingdom of insects and heroes.
+                        <i class="fa-solid fa-gamepad"></i>
 
-                        </p>
+                        <span>
+                            Library
+                        </span>
 
-                        <div class="game-buttons">
+                    </button>
 
-                            <button class="hero-btn primary">
-                                Buy Now
-                            </button>
+                    <button class="sidebar-btn">
 
-                            <button class="hero-btn secondary">
-                                Wishlist
-                            </button>
+                        <i class="fa-solid fa-gear"></i>
 
-                        </div>
+                        <span>
+                            Settings
+                        </span>
 
-                    </div>
+                    </button>
 
                 </div>
 
-                <div class="game-info-container">
+            </aside>
 
-                    <div class="game-info-card">
+            <main class="main">
 
-                        <h2>
-                            About this game
-                        </h2>
+                <section class="page page-home">
 
-                        <p>
+                    <section class="hero">
 
-                            Descend into darkness and explore a massive
-                            interconnected world filled with strange
-                            creatures, hidden secrets and intense bosses.
+                        <div class="hero-overlay"></div>
 
-                        </p>
+                        <img
+                            class="hero-banner"
+                            src="../../art/header.png">
 
-                    </div>
+                        <div class="hero-content">
 
-                    <div class="game-info-grid">
-
-                        <div class="info-box">
-
-                            <span class="info-label">
-                                Genre
+                            <span class="hero-tag">
+                                FEATURED
                             </span>
 
-                            <span class="info-value game-genre">
-                                Metroidvania
-                            </span>
+                            <h1 class="hero-title">
+                                Loading...
+                            </h1>
 
-                        </div>
+                            <p class="hero-description">
+                                Fetching indie deals...
+                            </p>
 
-                        <div class="info-box">
+                            <div class="hero-buttons">
 
-                            <span class="info-label">
-                                Platforms
-                            </span>
+                                <button class="hero-btn primary">
+                                    Play now
+                                </button>
 
-                            <span class="info-value game-platforms">
-                                Windows / Linux
-                            </span>
-
-                        </div>
-
-                        <div class="info-box">
-
-                            <span class="info-label">
-                                Release
-                            </span>
-
-                            <span class="info-value game-release">
-                                2017
-                            </span>
-
-                        </div>
-
-                        <div class="info-box">
-
-                            <span class="info-label">
-                                Price
-                            </span>
-
-                            <span class="info-value game-price">
-                                R$ 46,99
-                            </span>
-
-                        </div>
-
-                    </div>
-
-                    <div class="screenshots">
-
-                        <h2>
-                            Screenshots
-                        </h2>
-
-                        <div class="screenshots-grid">
-
-                            <img src="../../art/header.png">
-                            <img src="../../art/header.png">
-                            <img src="../../art/header.png">
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-        <section class="page page-library hidden">
-
-            <div class="placeholder-page">
-
-                <i class="fa-solid fa-gamepad"></i>
-
-                <h1>
-                    Your Library
-                </h1>
-
-                <p>
-                    Your installed games will appear here.
-                </p>
-
-            </div>
-
-        </section>
-
-        <section class="page page-settings hidden">
-
-            <div class="settings-page">
-
-                <div class="settings-header">
-
-                    <h1>
-                        Settings
-                    </h1>
-
-                    <p>
-                        Customize your Kydra experience.
-                    </p>
-
-                </div>
-
-                <div class="settings-grid">
-
-                    <div class="settings-card">
-
-                        <h2>
-                            Appearance
-                        </h2>
-
-                        <div class="setting-item">
-
-                            <div>
-
-                                <span class="setting-title">
-                                    Theme
-                                </span>
-
-                                <span class="setting-description">
-                                    Choose launcher appearance
-                                </span>
-
-                            </div>
-
-                            <select id="theme-setting">
-
-                                <option value="dark">
-                                    Dark
-                                </option>
-
-                                <option value="light">
-                                    Light
-                                </option>
-
-                            </select>
-
-                        </div>
-
-                        <div class="setting-item">
-
-                            <div>
-
-                                <span class="setting-title">
-                                    Language
-                                </span>
-
-                                <span class="setting-description">
-                                    Launcher language
-                                </span>
-
-                            </div>
-
-                            <select id="language-setting">
-
-                                <option value="en-US">
-                                    English
-                                </option>
-
-                                <option value="pt-BR">
-                                    Português
-                                </option>
-
-                            </select>
-
-                        </div>
-
-                        <div class="setting-item">
-
-                            <div>
-
-                                <span class="setting-title">
-                                    Currency
-                                </span>
-
-                                <span class="setting-description">
-                                    Preferred currency
-                                </span>
-
-                            </div>
-
-                            <select id="currency-setting">
-
-                                <option value="USD">
-                                    USD
-                                </option>
-
-                                <option value="BRL">
-                                    BRL
-                                </option>
-
-                            </select>
-
-                        </div>
-
-                    </div>
-
-                    <div class="settings-card">
-
-                        <h2>
-                            Integrations
-                        </h2>
-
-                        <div class="setting-item">
-
-                            <div>
-
-                                <span class="setting-title">
-                                    Itch.io Deals
-                                </span>
-
-                                <span class="setting-description">
-                                    Show deals from Itch.io
-                                </span>
-
-                            </div>
-
-                            <label class="switch">
-
-                                <input
-                                    type="checkbox"
-                                    id="itch-setting"
-                                >
-
-                                <span class="slider"></span>
-
-                            </label>
-
-                        </div>
-
-                        <div class="setting-item">
-
-                            <div>
-
-                                <span class="setting-title">
-                                    Steam Deals
-                                </span>
-
-                                <span class="setting-description">
-                                    Show Steam promotions
-                                </span>
-
-                            </div>
-
-                            <label class="switch">
-
-                                <input
-                                    type="checkbox"
-                                    id="steam-setting"
-                                >
-
-                                <span class="slider"></span>
-
-                            </label>
-
-                        </div>
-
-                        <div class="setting-item">
-
-                            <div>
-
-                                <span class="setting-title">
-                                    Notifications
-                                </span>
-
-                                <span class="setting-description">
-                                    Enable launcher notifications
-                                </span>
-
-                            </div>
-
-                            <label class="switch">
-
-                                <input
-                                    type="checkbox"
-                                    id="notifications-setting"
-                                >
-
-                                <span class="slider"></span>
-
-                            </label>
-
-                        </div>
-
-                    </div>
-
-                    <div class="settings-card">
-
-                        <h2>
-                            Steam
-                        </h2>
-
-                        <div class="setting-column">
-
-                            <span class="setting-title">
-                                Steam Game Directory
-                            </span>
-
-                            <span class="setting-description">
-                                Select where your Steam games are installed
-                            </span>
-
-                            <div class="path-input-group">
-
-                                <input
-                                    type="text"
-                                    id="steam-dir-setting"
-                                    placeholder="/home/user/.steam/steamapps/common"
-                                >
-
-                                <button id="browse-steam-dir">
-                                    Browse
+                                <button class="hero-btn secondary">
+                                    View on store
                                 </button>
 
                             </div>
 
                         </div>
 
+                    </section>
+
+                    <div class="container">
+
+                        <div class="section-header">
+
+                            <h2 class="section-title">
+                                Deals
+                            </h2>
+
+                        </div>
+
+                        <div
+                            class="grid"
+                            id="deals"></div>
+
                     </div>
 
-                    <div class="settings-card">
+                    <div class="container latest-container">
 
-                        <h2>
-                            About
-                        </h2>
+                        <div class="section-header">
 
-                        <div class="about-box">
+                            <h2 class="section-title">
+                                Latest
+                            </h2>
+
+                        </div>
+
+                        <div
+                            class="grid"
+                            id="latest"></div>
+
+                    </div>
+
+                </section>
+
+                <section class="page page-game hidden">
+
+                    <div class="game-page">
+
+                        <div class="game-hero">
 
                             <img
-                                src="../../art/icon_nobg.png"
-                                class="about-logo"
-                            >
+                                src="../../art/header.png"
+                                class="game-hero-bg">
 
-                            <div>
+                            <div class="game-hero-overlay"></div>
 
-                                <h3>
-                                    Kydra
-                                </h3>
+                            <div class="game-hero-content">
 
-                                <p id="app-version">
-                                    Loading version...
+                                <img
+                                    src="../../art/icon_nobg.png"
+                                    class="game-logo">
+
+                                <span class="game-tag">
+                                    FEATURED
+                                </span>
+
+                                <h1 class="game-title">
+                                    Hollow Knight
+                                </h1>
+
+                                <p class="game-description">
+
+                                    Forge your own path in Hollow Knight!
+                                    An epic action adventure through a vast
+                                    ruined kingdom of insects and heroes.
+
                                 </p>
+
+                                <div class="game-buttons">
+
+                                    <button class="buy-btn hero-btn primary">
+                                        Buy Now
+                                    </button>
+
+                                    <button class="hero-btn secondary">
+                                        Wishlist
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="game-info-container">
+
+                            <div class="game-info-card">
+
+                                <h2>
+                                    About this game
+                                </h2>
+
+                                <p>
+
+                                    Descend into darkness and explore a massive
+                                    interconnected world filled with strange
+                                    creatures, hidden secrets and intense
+                                    bosses.
+
+                                </p>
+
+                            </div>
+
+                            <div class="game-info-grid">
+
+                                <div class="info-box">
+
+                                    <span class="info-label">
+                                        Genre
+                                    </span>
+
+                                    <span class="info-value game-genre">
+                                        Metroidvania
+                                    </span>
+
+                                </div>
+
+                                <div class="info-box">
+
+                                    <span class="info-label">
+                                        Platforms
+                                    </span>
+
+                                    <span class="info-value game-platforms">
+                                        Windows / Linux
+                                    </span>
+
+                                </div>
+
+                                <div class="info-box">
+
+                                    <span class="info-label">
+                                        Release
+                                    </span>
+
+                                    <span class="info-value game-release">
+                                        2017
+                                    </span>
+
+                                </div>
+
+                                <div class="info-box">
+
+                                    <span class="info-label">
+                                        Price
+                                    </span>
+
+                                    <span class="info-value game-price">
+                                        R$ 46,99
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                            <div class="screenshots">
+
+                                <h2>
+                                    Screenshots
+                                </h2>
+
+                                <div class="screenshots-grid">
+
+                                    <img src="../../art/header.png">
+                                    <img src="../../art/header.png">
+                                    <img src="../../art/header.png">
+
+                                </div>
 
                             </div>
 
@@ -575,20 +286,382 @@
 
                     </div>
 
-                </div>
+                </section>
 
-            </div>
+                <section class="page page-library hidden">
 
-        </section>
+                    <div class="library-page">
 
-    </main>
+                        <div class="library-header">
 
-</div>
+                            <div>
+                                <h1>Your Library</h1>
+                                <p>Manage your installed and favorite games.</p>
+                            </div>
 
-<div class="footer-text"></div>
+                            <div class="library-search">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                                <input type="text"
+                                    placeholder="Search games...">
+                            </div>
 
-<script src="index.js"></script>
+                        </div>
 
-</body>
+                        <div class="library-categories">
+                            <button class="library-category active">All</button>
+                            <button class="library-category">Installed</button>
+                            <button class="library-category">Favorites</button>
+                            <button class="library-category">Recent</button>
+                        </div>
+
+                        <div class="library-grid"></div>
+
+                    </div>
+
+                </section>
+
+                <section class="page page-settings hidden">
+
+                    <div class="settings-page">
+
+                        <div class="settings-header">
+
+                            <h1>
+                                Settings
+                            </h1>
+
+                            <p>
+                                Customize your Kydra experience.
+                            </p>
+
+                        </div>
+
+                        <div class="settings-grid">
+
+                            <div class="settings-card">
+
+                                <h2>
+                                    Appearance
+                                </h2>
+
+                                <div class="setting-item">
+
+                                    <div>
+
+                                        <span class="setting-title">
+                                            Theme
+                                        </span>
+
+                                        <span class="setting-description">
+                                            Choose launcher appearance
+                                        </span>
+
+                                    </div>
+
+                                    <select id="theme-setting">
+
+                                        <option value="dark">
+                                            Dark
+                                        </option>
+
+                                        <option value="light">
+                                            Light
+                                        </option>
+
+                                    </select>
+
+                                </div>
+
+                                <div class="setting-item">
+
+                                    <div>
+
+                                        <span class="setting-title">
+                                            Language
+                                        </span>
+
+                                        <span class="setting-description">
+                                            Launcher language
+                                        </span>
+
+                                    </div>
+
+                                    <select id="language-setting">
+
+                                        <option value="en-US">
+                                            English
+                                        </option>
+
+                                        <option value="pt-BR">
+                                            Português
+                                        </option>
+
+                                    </select>
+
+                                </div>
+
+                                <div class="setting-item">
+
+                                    <div>
+
+                                        <span class="setting-title">
+                                            Currency
+                                        </span>
+
+                                        <span class="setting-description">
+                                            Preferred currency
+                                        </span>
+
+                                    </div>
+
+                                    <select id="currency-setting">
+
+                                        <option value="USD">
+                                            USD
+                                        </option>
+
+                                        <option value="BRL">
+                                            BRL
+                                        </option>
+
+                                    </select>
+
+                                </div>
+
+                            </div>
+
+                            <div class="settings-card">
+
+                                <h2>
+                                    Integrations
+                                </h2>
+
+                                <div class="setting-item">
+
+                                    <div>
+
+                                        <span class="setting-title">
+                                            Itch.io Deals
+                                        </span>
+
+                                        <span class="setting-description">
+                                            Show deals from Itch.io
+                                        </span>
+
+                                    </div>
+
+                                    <label class="switch">
+
+                                        <input
+                                            type="checkbox"
+                                            id="itch-setting">
+
+                                        <span class="slider"></span>
+
+                                    </label>
+
+                                </div>
+
+                                <div class="setting-item">
+
+                                    <div>
+
+                                        <span class="setting-title">
+                                            Steam Deals
+                                        </span>
+
+                                        <span class="setting-description">
+                                            Show Steam promotions
+                                        </span>
+
+                                    </div>
+
+                                    <label class="switch">
+
+                                        <input
+                                            type="checkbox"
+                                            id="steam-setting">
+
+                                        <span class="slider"></span>
+
+                                    </label>
+
+                                </div>
+
+                                <div class="setting-item">
+
+                                    <div>
+
+                                        <span class="setting-title">
+                                            Notifications
+                                        </span>
+
+                                        <span class="setting-description">
+                                            Enable launcher notifications
+                                        </span>
+
+                                    </div>
+
+                                    <label class="switch">
+
+                                        <input
+                                            type="checkbox"
+                                            id="notifications-setting">
+
+                                        <span class="slider"></span>
+
+                                    </label>
+
+                                </div>
+
+                            </div>
+
+                            <div class="settings-card">
+
+                                <h2>
+                                    Steam
+                                </h2>
+
+                                <div class="setting-column">
+
+                                    <span class="setting-title">
+                                        Steam Game Directory
+                                    </span>
+
+                                    <span class="setting-description">
+                                        Select where your Steam games are
+                                        installed
+                                    </span>
+
+                                    <div class="path-input-group">
+
+                                        <input
+                                            type="text"
+                                            id="steam-dir-setting"
+                                            placeholder="/home/user/.steam/steamapps/common">
+
+                                        <button id="browse-steam-dir">
+                                            Browse
+                                        </button>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="settings-card">
+
+                                <h2>
+                                    itch.io
+                                </h2>
+
+                                <div class="setting-column">
+
+                                    <span class="setting-title">
+                                        itch.io Directory
+                                    </span>
+
+                                    <span class="setting-description">
+                                        Select where your itch.io games are
+                                        installed
+                                    </span>
+
+                                    <div class="path-input-group">
+
+                                        <input
+                                            type="text"
+                                            id="third-party-dir-setting"
+                                            placeholder="/home/user/Games/itch-io">
+
+                                        <button id="browse-third-party-dir">
+                                            Browse
+                                        </button>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="settings-card">
+
+                                <h2>
+                                    Third-Party
+                                </h2>
+
+                                <div class="setting-column">
+
+                                    <span class="setting-title">
+                                        Third-Party Directory
+                                    </span>
+
+                                    <span class="setting-description">
+                                        Select where your third-party games are
+                                        installed
+                                    </span>
+
+                                    <div class="path-input-group">
+
+                                        <input
+                                            type="text"
+                                            id="third-party-dir-setting"
+                                            placeholder="/home/user/Games/third-party">
+
+                                        <button id="browse-third-party-dir">
+                                            Browse
+                                        </button>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="settings-card">
+
+                                <h2>
+                                    About
+                                </h2>
+
+                                <div class="about-box">
+
+                                    <img
+                                        src="../../art/icon_nobg.png"
+                                        class="about-logo">
+
+                                    <div>
+
+                                        <h3>
+                                            Kydra
+                                        </h3>
+
+                                        <p id="app-version">
+                                            Loading version...
+                                        </p>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+            </main>
+
+        </div>
+
+        <div class="footer-text"></div>
+
+        <script src="index.js"></script>
+        <script src="https://static.itch.io/api.js"></script>
+
+    </body>
 
 </html>

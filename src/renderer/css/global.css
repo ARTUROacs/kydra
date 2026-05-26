@@ -448,23 +448,16 @@ body {
 }
 
 .page {
-    opacity: 1;
-
-    transform: translateY(0px);
-
-    transition:
-        opacity 0.25s ease,
-        transform 0.25s ease;
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+  transition: opacity 0.25s ease, transform 0.25s ease;
 }
 
 .page.hidden {
-    opacity: 0;
-
-    transform: translateY(10px);
-
-    pointer-events: none;
-
-    position: absolute;
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none;
 }
 
 .placeholder-page {
@@ -1073,4 +1066,237 @@ body {
     transform: translateX(0);
     opacity: 1;
   }
+}
+
+.library-page {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding-bottom: 80px;
+    animation: fadeIn .25s ease;
+}
+
+.library-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.library-header h1 {
+    font-size: 42px;
+    margin-bottom: 8px;
+}
+
+.library-header p {
+    font-size: 15px;
+    opacity: .7;
+}
+
+.library-search {
+    height: 52px;
+    min-width: 320px;
+
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    padding: 0 18px;
+
+    border-radius: 16px;
+
+    background: rgba(255,255,255,.05);
+
+    border: 1px solid rgba(255,255,255,.06);
+
+    backdrop-filter: blur(14px);
+}
+
+.library-search i {
+    opacity: .6;
+}
+
+.library-search input {
+    width: 100%;
+
+    border: none;
+    outline: none;
+
+    background: transparent;
+
+    color: white;
+
+    font-family: inherit;
+    font-size: 14px;
+}
+
+.library-search input::placeholder {
+    color: rgba(255,255,255,.45);
+}
+
+.library-categories {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.library-category {
+    border: none;
+
+    padding: 10px 18px;
+
+    border-radius: 999px;
+
+    background: rgba(255,255,255,.06);
+
+    color: rgba(255,255,255,.7);
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: .2s;
+}
+
+.library-category:hover {
+    background: rgba(255,255,255,.1);
+    color: white;
+}
+
+.library-category.active {
+    background: white;
+    color: black;
+}
+
+.library-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fill, minmax(320px, 1fr));
+
+    gap: 22px;
+}
+
+.library-card {
+    position: relative;
+
+    height: 220px;
+
+    overflow: hidden;
+
+    border-radius: 24px;
+
+    background: rgba(255,255,255,.04);
+
+    border: 1px solid rgba(255,255,255,.06);
+
+    transition:
+        transform .25s ease,
+        box-shadow .25s ease,
+        border .25s ease;
+}
+
+.library-card:hover {
+    transform: translateY(-6px);
+
+    border-color: rgba(255,255,255,.12);
+
+    box-shadow:
+        0 20px 45px rgba(0,0,0,.35);
+}
+
+.library-thumb {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+}
+
+.library-card-overlay {
+    position: absolute;
+    inset: 0;
+
+    background:
+        linear-gradient(
+            to top,
+            rgba(0,0,0,.92),
+            rgba(0,0,0,.15)
+        );
+}
+
+.library-card-content {
+    position: absolute;
+
+    left: 22px;
+    right: 22px;
+    bottom: 22px;
+
+    z-index: 2;
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.library-status {
+    width: fit-content;
+
+    padding: 6px 12px;
+
+    border-radius: 999px;
+
+    font-size: 11px;
+    font-weight: 700;
+
+    letter-spacing: .5px;
+
+    backdrop-filter: blur(10px);
+}
+
+.library-status.installed {
+    background: rgba(109,255,145,.15);
+    color: #6dff91;
+}
+
+.library-status.update {
+    background: rgba(255,196,87,.15);
+    color: #ffc457;
+}
+
+.library-card-content h2 {
+    font-size: 28px;
+    font-weight: 800;
+}
+
+.library-card-content p {
+    font-size: 14px;
+    opacity: .72;
+}
+
+.library-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 6px;
+}
+
+@media (max-width: 700px) {
+
+    .library-header h1 {
+        font-size: 32px;
+    }
+
+    .library-search {
+        min-width: 100%;
+    }
+
+    .library-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .library-card {
+        height: 200px;
+    }
+
 }

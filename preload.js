@@ -35,8 +35,8 @@ contextBridge.exposeInMainWorld('kydraAPI', {
     getItchDeals: () =>
         ipcRenderer.invoke('itchio:getItchDeals'),
 
-    getLatestGames: () =>
-        ipcRenderer.invoke('itchio:getLatestGames'),
+    getItchLatestGames: () =>
+        ipcRenderer.invoke('itchio:getItchLatestGames'),
 
     selectGame: (gamePath, appid) =>
         ipcRenderer.invoke('thirdparty:selectGame', gamePath, appid),
@@ -67,6 +67,9 @@ contextBridge.exposeInMainWorld('kydraAPI', {
 
     getSponsoredHero: () =>
         ipcRenderer.invoke('get-sponsored-hero'),
+
+    getInstalledGames: () =>
+        ipcRenderer.invoke('thirdparty:getInstalledGames'),
 
     getAllTranslations: (language) =>
         ipcRenderer.invoke('translations:getAll', language)

@@ -1,9 +1,27 @@
 const axios = require('axios')
 const cheerio = require('cheerio')
 
-const version = fetch('https://raw.githubusercontent.com/k7sistemas/kydra/refs/heads/main/version.txt')
+async function getVersion() {
+
+    try {
+
+        const response = await axios.get(
+            'https://raw.githubusercontent.com/k7sistemas/kydra/refs/heads/main/version.txt'
+        )
+
+        return response.data.trim()
+
+    } catch {
+
+        return 'dev'
+
+    }
+
+}
 
 async function fetchDeals() {
+
+    const version = await getVersion()
 
     const { data } = await axios.get(
         'https://itch.io/games/on-sale',
@@ -29,9 +47,13 @@ async function fetchDeals() {
             .find('.title.game_link')
             .attr('href')
 
-        const image =
+        let image =
             $(el).find('img').attr('data-lazy_src') ||
             $(el).find('img').attr('src')
+
+        if (image && image.startsWith('//')) {
+            image = 'https:' + image
+        }
 
         const price =
             $(el)
@@ -60,19 +82,29 @@ async function fetchDeals() {
             .trim()
 
         const platforms = []
+
         $(el)
             .find('.game_platform span[title]')
             .each((i, span) => {
-                const title = $(span).attr('title') || ''
-                const name = title.replace(/^Download for /i, '').trim()
-                if (name)
+
+                const platformTitle =
+                    $(span).attr('title') || ''
+
+                const name = platformTitle
+                    .replace(/^Download for /i, '')
+                    .trim()
+
+                if (name) {
                     platforms.push(name)
+                }
+
             })
 
         const gameId = $(el).attr('data-game_id')
 
-        if (!discount.includes('%'))
+        if (!discount.includes('%')) {
             return
+        }
 
         games.push({
             gameId,
@@ -86,12 +118,17 @@ async function fetchDeals() {
             url,
             platforms
         })
+
     })
 
     return games
+
 }
 
-async function fetchNewGames(version) {
+async function fetchNewGames() {
+
+    const version = await getVersion()
+
     const { data } = await axios.get(
         'https://itch.io/games/last-day',
         {
@@ -107,12 +144,61 @@ async function fetchNewGames(version) {
 
     $('.game_cell').each((i, el) => {
 
-        const title = $(el).find('.game_title a').text().trim()
-        const url = $(el).find('.game_title a').attr('href')
-        const image = $(el).find('.game_thumb img').attr('src')
-        const author = $(el).find('.game_author a').text().trim()
-        const genre = $(el).find('.game_genre').text().trim()
-        const description = $(el).find('.game_text').text().trim()
+        const title = $(el)
+            .find('.game_title a')
+            .text()
+            .trim()
+
+        const url = $(el)
+            .find('.game_title a')
+            .attr('href')
+
+        let image =
+            $(el)
+                .find('.game_thumb img')
+                .attr('data-lazy_src') ||
+
+            $(el)
+                .find('.game_thumb img')
+                .attr('src')
+
+        if (image && image.startsWith('//')) {
+            image = 'https:' + image
+        }
+
+        const author = $(el)
+            .find('.game_author a')
+            .text()
+            .trim()
+
+        const genre = $(el)
+            .find('.game_genre')
+            .text()
+            .trim()
+
+        const description = $(el)
+            .find('.game_text')
+            .text()
+            .trim()
+
+        const platforms = []
+
+        $(el)
+            .find('.game_platform span[title]')
+            .each((i, span) => {
+
+                const platformTitle =
+                    $(span).attr('title') || ''
+
+                const name = platformTitle
+                    .replace(/^Download for /i, '')
+                    .trim()
+
+                if (name) {
+                    platforms.push(name)
+                }
+
+            })
 
         games.push({
             title,
@@ -120,15 +206,18 @@ async function fetchNewGames(version) {
             image,
             author,
             genre,
-            description
+            description,
+            platforms
         })
+
     })
 
     return games
-}
 
+}
 
 module.exports = {
     fetchDeals,
-    fetchNewGames
+    fetchNewGames,
+    getVersion
 }

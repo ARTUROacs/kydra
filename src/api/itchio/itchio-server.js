@@ -25,7 +25,7 @@ app.get('/api/deals', async (req, res) => {
     }
 })
 
-app.get('/api/new-games', async (req, res) => {
+app.get('/api/latest', async (req, res) => {
 
     try {
 

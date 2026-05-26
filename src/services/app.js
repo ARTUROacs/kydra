@@ -8,7 +8,9 @@ const DEFAULT_PREFERENCES = {
   itchDeals: true,
   steamDeals: false,
   steamGameDir: '',
-  language: 'en-US',
+  itchioGameDir: '',
+  thirdpartyGameDir: '',
+  language: 'en',
   currency: 'USD',
   notifications: true,
 };

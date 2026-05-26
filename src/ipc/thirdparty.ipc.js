@@ -32,3 +32,7 @@ ipcMain.handle('thirdparty:pickGameExecutable', async () => {
 
     return result.filePaths[0]
 })
+
+ipcMain.handle('thirdparty:getInstalledGames', async () => {
+    return thirdparty.getInstalledGames()
+})

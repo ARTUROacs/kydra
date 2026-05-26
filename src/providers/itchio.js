@@ -29,7 +29,7 @@ async function getItchDeals() {
     }
 }
 
-async function getLatestGames() {
+async function getItchLatestGames() {
     try {
         console.log('[itchio] Fetching latest games from http://localhost:3000/api/latest')
         const response = await fetch('http://localhost:3000/api/latest')
@@ -62,5 +62,5 @@ async function getLatestGames() {
 
 module.exports = {
     getItchDeals,
-    getLatestGames
+    getItchLatestGames
 }

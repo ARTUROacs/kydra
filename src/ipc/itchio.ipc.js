@@ -5,6 +5,6 @@ ipcMain.handle('itchio:getItchDeals', async () => {
     return await itchio.getItchDeals()
 })
 
-ipcMain.handle('itchio:getLatestGames', async () => {
-    return await itchio.getLatestGames()
+ipcMain.handle('itchio:getItchLatestGames', async () => {
+    return await itchio.getItchLatestGames()
 })

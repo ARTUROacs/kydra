@@ -55,11 +55,6 @@ async function getSteamDeals() {
     }
 }
 
-async function getSteamInstalledGames(path) {
-    console.log('Fetching installed games...')
-    return []
-}
-
 function getSteamAssets(appid) {
     const base = `https://cdn.cloudflare.steamstatic.com/steam/apps/${appid}`
 
@@ -138,7 +133,6 @@ function openStorePage(appid) {
 module.exports = {
     getGameDetails,
     getSteamDeals,
-    getSteamInstalledGames,
     validateGameFiles,
     installGame,
     uninstallGame,
