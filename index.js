@@ -31,7 +31,7 @@ function createWindow() {
         }
     })
 
-    window.loadFile(path.join(__dirname, 'src/renderer/index.html'))
+    window.loadFile(path.join(__dirname, 'src/renderer/html/index.html'))
 
     // window.webContents.openDevTools()
 

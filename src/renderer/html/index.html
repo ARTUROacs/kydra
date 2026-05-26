@@ -7,7 +7,7 @@
 
         <title>Kydra</title>
 
-        <link rel="stylesheet" href="css/global.css">
+        <link rel="stylesheet" href="../css/global.css">
 
         <link
             rel="stylesheet"
@@ -26,11 +26,11 @@
 
                 <audio
                     id="click-sfx"
-                    src="../../art/sfx/miau.wav"
+                    src="../../../art/sfx/miau.wav"
                     preload="auto"></audio>
 
                 <img
-                    src="../../art/icon_nobg.png"
+                    src="../../../art/icon_nobg.png"
                     class="logo">
 
                 <div class="sidebar-buttons">
@@ -152,7 +152,7 @@
                         <div class="game-hero">
 
                             <img
-                                src="../../art/header.png"
+                                src="../../../art/header.png"
                                 class="game-hero-bg">
 
                             <div class="game-hero-overlay"></div>
@@ -160,7 +160,7 @@
                             <div class="game-hero-content">
 
                                 <img
-                                    src="../../art/icon_nobg.png"
+                                    src="../../../art/icon_nobg.png"
                                     class="game-logo">
 
                                 <span class="game-tag">
@@ -274,9 +274,9 @@
 
                                 <div class="screenshots-grid">
 
-                                    <img src="../../art/header.png">
-                                    <img src="../../art/header.png">
-                                    <img src="../../art/header.png">
+                                    <img src="../../../art/header.png">
+                                    <img src="../../../art/header.png">
+                                    <img src="../../../art/header.png">
 
                                 </div>
 
@@ -619,6 +619,41 @@
 
                             </div>
 
+                            </div>
+
+                            <div class="settings-card">
+
+                                <h2>
+                                    Setup Game Directories (itch.io & Third-Party)
+                                </h2>
+
+                                <div class="setting-column">
+
+                                    <span class="setting-title">
+                                        Setup Game Directories
+                                    </span>
+
+                                    <span class="setting-description">
+                                        Select where your game from itch.io or third-party are installed
+                                    </span>
+
+                                    <div class="path-input-group">
+
+                                        <input
+                                            type="text"
+                                            id="third-party-dir-setting"
+                                            placeholder="/home/user/Games/your-game">
+
+                                        <button id="browse-third-party-dir">
+                                            Browse
+                                        </button>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
                             <div class="settings-card">
 
                                 <h2>
@@ -628,7 +663,7 @@
                                 <div class="about-box">
 
                                     <img
-                                        src="../../art/icon_nobg.png"
+                                        src="../../../art/icon_nobg.png"
                                         class="about-logo">
 
                                     <div>
@@ -659,7 +694,7 @@
 
         <div class="footer-text"></div>
 
-        <script src="index.js"></script>
+        <script src="../js/index.js"></script>
         <script src="https://static.itch.io/api.js"></script>
 
     </body>

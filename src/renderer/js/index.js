@@ -1,5 +1,5 @@
-const FALLBACK = "../../art/header.png";
-const FALLBACKBG = "../../art/bg.png";
+const FALLBACK = "../../../art/header.png";
+const FALLBACKBG = "../../../art/bg.png";
 
 let bg = null;
 let selectedGame = null;
@@ -23,7 +23,7 @@ let currentLanguage = "pt";
 async function systemNotification(
   title,
   body,
-  icon = "../../art/icon_nobg.png",
+  icon = "../../../art/icon_nobg.png",
 ) {
   try {
     if (!("Notification" in window)) {
