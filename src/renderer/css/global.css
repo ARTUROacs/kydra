@@ -138,7 +138,7 @@ body {
 }
 
 .sidebar-btn:hover {
-    background: rgba(255,255,255,0.08);
+    background: rgba(175, 98, 10, 0.527);/*só fazendo um teste*/
 
     color: white;
 
@@ -146,11 +146,11 @@ body {
 }
 
 .sidebar-btn.active {
-    background: white;
+    background: rgba(255, 136, 0, 0.808);
     color: black;
 
     box-shadow:
-        0 0 25px rgba(255,255,255,0.15);
+        0 0 25px rgba(241, 185, 0, 0.39);
 }
 
 .main {
