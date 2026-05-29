@@ -1,0 +1,62 @@
+.apps {
+    /**/
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+
+    gap: 50px;
+
+    justify-content: center;
+    align-items: center;
+}
+
+.apps span {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    /**/
+    width: 350px;
+    height: 450px;
+    background-color: rgb(255, 145, 0);
+    /**/
+    border-radius: 40px;
+    /**/
+    cursor: pointer;
+}
+
+h3 {
+    font-family: "Bebas Neue", sans-serif;
+    font-size: 0px;
+    letter-spacing: 2px;
+    margin: 0px;
+}
+
+/*------*/
+
+.apps .span-description{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 101%;
+    height: 15%;
+    background-color: #000000;
+    color: #ffffff;
+    /**/
+    border-bottom-left-radius: 40px;
+    border-bottom-right-radius: 40px;
+}
+
+.apps .span-description h2{
+    margin-top: 2px;
+    margin-left: 20px;
+}
+
+.apps .span-description .price{
+    font-size: 20px;
+    margin-right: 20px;
+    width: 70px;
+    height: 30px;
+    background-color: #00ff00;
+    color: #000000;
+}

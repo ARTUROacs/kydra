@@ -1,0 +1,15 @@
+.apps span:hover h3{
+    animation: 0.1s forwards see-more;
+}
+
+@keyframes see-more {
+    from {    
+            font-size: 0px;
+            margin: 0px;
+    }
+
+    to {
+        font-size: 20px;
+        margin: 3px;
+    }
+}
